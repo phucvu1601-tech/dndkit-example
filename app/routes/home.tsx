@@ -1,10 +1,13 @@
-import { HomePage } from "@/features/home/components/home"
+import { HomePage } from "@/features/home/components/home-page"
 import type { Route } from "./+types/home"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Dnd-kit react example" },
+    {
+      name: "description",
+      content: "This is example of dnd-kit lib for react",
+    },
   ]
 }
 

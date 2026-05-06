@@ -1,13 +1,11 @@
 import { useTranslation } from "react-i18next"
-import logoDark from "@/features/home/assets/logo-dark.svg"
-import logoLight from "@/features/home/assets/logo-light.svg"
-import { LocaleSelector } from "@/shared/components/header/locale-selector"
-import { ThemeSelector } from "@/shared/components/header/theme-selector"
+import logoDark from "@/shared/assets/logo-dark.svg"
+import logoLight from "@/shared/assets/logo-light.svg"
 
 export function HomePage() {
   const { t } = useTranslation("home")
   return (
-    <main className="flex items-center justify-center pt-16 pb-4 h-screen">
+    <main className="flex items-center justify-center pt-16 pb-4 h-full w-full">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
         <header className="flex flex-col items-center gap-9">
           <div className="w-125 max-w-[100vw] p-4">
@@ -21,10 +19,6 @@ export function HomePage() {
               alt="React Router"
               className="hidden w-full dark:block"
             />
-          </div>
-          <div className="flex gap-3">
-            <ThemeSelector />
-            <LocaleSelector />
           </div>
         </header>
         <div className="max-w-75 w-full space-y-6 px-4">
