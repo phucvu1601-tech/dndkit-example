@@ -1,5 +1,6 @@
 import { ChevronRight } from "lucide-react"
 import * as React from "react"
+import { Link } from "react-router"
 import dndkitLogo from "@/shared/assets/dnd-kit-logo.svg"
 import NavItem from "@/shared/components/sidebar/nav-item"
 import { SearchForm } from "@/shared/components/sidebar/search-form"
@@ -29,11 +30,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="h-auto">
-              <a href="/dashboard">
+              <Link to="/">
                 <div className="w-40 max-w-[100vw]">
                   <img src={dndkitLogo} alt="React Router" className="w-full" />
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

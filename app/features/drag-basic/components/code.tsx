@@ -1,5 +1,5 @@
-import { CodeBlock } from "@/shared/components/background/code-block"
-import { InstallBlock } from "@/shared/components/background/install-block"
+import { CodeBlock } from "@/shared/components/container/code-block"
+import { InstallBlock } from "@/shared/components/container/install-block"
 import Section from "@/shared/components/custom/section"
 
 const code = `
