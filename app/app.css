@@ -143,3 +143,33 @@ body {
     @apply font-sans;
   }
 }
+
+@layer utilities {
+  :root {
+    --card-gradient: linear-gradient(
+      100deg,
+      #5f6af2,
+      #a65ff2,
+      #f25fd0,
+      #f25f61,
+      #f2b75f,
+      #5ff2c8,
+      #5f6af2
+    );
+  }
+  @keyframes gradient-move {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient-move {
+    animation: gradient-move 25s ease infinite;
+  }
+}
