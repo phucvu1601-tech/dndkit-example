@@ -1,27 +1,28 @@
-import type { DragBasicState } from "@/features/drag-basic/components/drag-basic-page"
-import { Draggable } from "@/features/drag-basic/components/draggable"
+import type { DragHandleState } from "@/features/drag-handles/components/drag-handles-page"
+import { Draggable } from "@/features/drag-handles/components/draggable"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
+import CustomSwitch from "@/shared/components/custom/custom-switch"
 import Section from "@/shared/components/custom/section"
 
 interface PreviewProps {
-  state: DragBasicState
-  setField: <K extends keyof DragBasicState>(
+  state: DragHandleState
+  setField: <K extends keyof DragHandleState>(
     key: K,
-    value: DragBasicState[K],
+    value: DragHandleState[K],
   ) => void
   layout: GridLayout
 }
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
-  const { count, content } = state
+  const { count, content, hasHandle } = state
   const draggables = Array.from(
     { length: count },
     (_, i) =>
-      `<Draggable id="${i + 1}"${content ? `>${content}</Draggable>` : "/>"}`,
+      `<Draggable id="${i + 1}"${hasHandle ? " hasHandle " : ""}${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
   const code = `import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "./draggable"
@@ -36,7 +37,7 @@ import { Draggable } from "./draggable"
       <Section label="Display">
         <DemoBackground>
           {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
-            <Draggable key={i + 1} id={String(i + 1)}>
+            <Draggable key={i + 1} id={String(i + 1)} hasHandle={hasHandle}>
               {content}
             </Draggable>
           ))}
@@ -54,6 +55,11 @@ import { Draggable } from "./draggable"
             label="Children content"
             value={content}
             setValue={(value) => setField("content", value)}
+          />
+          <CustomSwitch
+            label="Has handle"
+            value={hasHandle}
+            setValue={(value) => setField("hasHandle", value)}
           />
         </div>
       </Section>

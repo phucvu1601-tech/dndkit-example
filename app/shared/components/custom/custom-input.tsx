@@ -3,7 +3,7 @@ import { Input } from "@/shared/components/ui/input"
 interface CustomInputProps {
   label: string
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: (value: string) => void
 }
 
 export default function CustomInput({

@@ -34,7 +34,7 @@ export function LayoutPicker({ value, onChange }: LayoutPickerProps) {
           variant={"outline"}
           spacing={5}
           value={value}
-          onValueChange={onChange}
+          onValueChange={(v) => v && onChange(v as GridLayout)}
           className="grid grid-cols-3"
         >
           {GRID_LAYOUTS.map((l) => (

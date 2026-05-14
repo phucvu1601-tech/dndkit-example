@@ -6,7 +6,7 @@ import { Input } from "@/shared/components/ui/input"
 interface CountProps {
   label: string
   value: number
-  setValue: React.Dispatch<React.SetStateAction<number>>
+  setValue: (value: number) => void
   minValue?: number
   maxValue?: number
 }
@@ -39,14 +39,14 @@ export default function Count({
         <Button
           variant="outline"
           disabled={minValue !== undefined && value <= minValue}
-          onClick={() => setValue((c) => c - 1)}
+          onClick={() => setValue(value - 1)}
         >
           <Minus />
         </Button>
         <Button
           variant="outline"
           disabled={maxValue !== undefined && value >= maxValue}
-          onClick={() => setValue((c) => c + 1)}
+          onClick={() => setValue(value + 1)}
         >
           <Plus />
         </Button>
