@@ -1,3 +1,4 @@
+import { DragDropProvider } from "@dnd-kit/react"
 import type { DragHandleState } from "@/features/drag-handles/components/drag-handles-page"
 import { Draggable } from "@/features/drag-handles/components/draggable"
 import { CodeBlock } from "@/shared/components/container/code-block"
@@ -36,11 +37,13 @@ import { Draggable } from "./draggable"
     <Grid layout={layout} className="gap-8">
       <Section label="Display">
         <DemoBackground>
-          {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
-            <Draggable key={i + 1} id={String(i + 1)} hasHandle={hasHandle}>
-              {content}
-            </Draggable>
-          ))}
+          <DragDropProvider>
+            {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
+              <Draggable key={i + 1} id={String(i + 1)} hasHandle={hasHandle}>
+                {content}
+              </Draggable>
+            ))}
+          </DragDropProvider>
         </DemoBackground>
       </Section>
       <Section label="Customize">
