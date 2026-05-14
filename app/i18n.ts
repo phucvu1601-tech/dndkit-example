@@ -22,7 +22,7 @@ i18n
     },
     backend: {
       // Path to the translation files
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
+      loadPath: "/dndkit-example/locales/{{lng}}/{{ns}}.json",
     },
   })
 
