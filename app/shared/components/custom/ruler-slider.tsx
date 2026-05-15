@@ -88,7 +88,7 @@ export function RulerSlider({
 
         {/* Thumb — vertical bar */}
         <Slider.Thumb
-          aria-label="ruler slider"
+          aria-label={label}
           className={cn(
             "relative block h-4.5 w-0.5 rounded-md cursor-pointer -translate-x-1 bg-primary origin-center transition-all duration-100 opacity-50",
             "group-hover:scale-130 group-hover:opacity-100",

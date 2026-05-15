@@ -16,7 +16,7 @@ const DEFAULT_STATE: DragGhostState = {
   draggingOpacity: 100,
 }
 
-export default function DragBasicPage() {
+export default function DragGhostPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragGhostState>(() => ({
     count: Number(searchParams.get("count")) || 1,
@@ -52,7 +52,7 @@ export default function DragBasicPage() {
 
   return (
     <DemoPage
-      title="Draggable basic"
+      title="Draggable ghost"
       hasChanges={searchParams.size !== 0}
       onReset={handleReset}
       renderPreview={(layout) => (
