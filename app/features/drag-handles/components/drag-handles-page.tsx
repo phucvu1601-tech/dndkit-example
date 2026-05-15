@@ -41,12 +41,12 @@ export default function DragHandlePage() {
     if (!state.hasHandle) params.set("hasHandle", "false")
     else params.delete("hasHandle")
 
-    setSearchParams(params, { replace: true })
+    setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
     setState(DEFAULT_STATE)
-    setSearchParams({}, { replace: true })
+    setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 
   return (

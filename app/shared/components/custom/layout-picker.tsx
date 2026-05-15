@@ -25,7 +25,7 @@ export function LayoutPicker({ value, onChange }: LayoutPickerProps) {
       <PopoverTrigger asChild>
         <Button variant="outline" className="h-full w-fit px-4">
           <LayoutGrid />
-          <p>Layout</p>
+          <p className="max-sm:hidden">Layout</p>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-fit" align="end">

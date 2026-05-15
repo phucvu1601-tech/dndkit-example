@@ -23,7 +23,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
   const draggables = Array.from(
     { length: count },
     (_, i) =>
-      `<Draggable id="${i + 1}"${hasHandle ? " hasHandle " : ""}${content ? `>${content}</Draggable>` : "/>"}`,
+      `<Draggable id="${i + 1}"${hasHandle ? " hasHandle" : ""}${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
   const code = `import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "./draggable"

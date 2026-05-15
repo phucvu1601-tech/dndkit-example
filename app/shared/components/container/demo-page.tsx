@@ -47,7 +47,7 @@ export function DemoPage({
                 className="flex h-full px-4"
                 onClick={onReset}
               >
-                <RotateCcw /> <p>Reset</p>
+                <RotateCcw /> <p className="max-sm:hidden">Reset</p>
               </Button>
             )}
             <LayoutPicker value={layout} onChange={setLayout} />

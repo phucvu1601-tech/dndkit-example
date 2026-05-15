@@ -6,6 +6,7 @@ import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
+import { RulerSlider } from "@/shared/components/custom/ruler-slider"
 import Section from "@/shared/components/custom/section"
 
 interface PreviewProps {
@@ -22,7 +23,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
   const draggables = Array.from(
     { length: count },
     (_, i) =>
-      `<Draggable id="${i + 1}"${content ? `>${content}</Draggable>` : "/>"}`,
+      `<Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
   const code = `import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "./draggable"
@@ -62,12 +63,10 @@ import { Draggable } from "./draggable"
             value={content}
             setValue={(value) => setField("content", value)}
           />
-          <Count
-            label="Ghost Opacity"
+          <RulerSlider
+            label="Dragging opacity"
             value={draggingOpacity}
-            setValue={(value) => setField("draggingOpacity", value)}
-            minValue={0}
-            maxValue={100}
+            onValueChange={(value) => setField("draggingOpacity", value)}
           />
         </div>
       </Section>
