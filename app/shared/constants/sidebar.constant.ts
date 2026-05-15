@@ -25,6 +25,10 @@ export const navData: NavGroup[] = [
             url: "/drag-handles",
           },
           {
+            title: "Drag ghost",
+            url: "/drag-ghost",
+          },
+          {
             title: "Drag overlay",
             url: "/drag-overlay",
           },

@@ -29,7 +29,7 @@ export function Draggable({ id, children, hasHandle = false }: DraggableProps) {
           <GripVertical size={18} />
         </div>
       )}
-      {children ? children : "Draggable"}
+      {children || "Draggable"}
     </div>
   )
 }
