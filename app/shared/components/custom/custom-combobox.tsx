@@ -10,23 +10,23 @@ import {
 } from "@/shared/components/ui/combobox"
 import { cn } from "@/shared/lib/utils"
 
-interface CustomCombobox {
+interface CustomComboboxProps {
   label: string
   placeholder?: string
   options: string[]
   value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: (value: string) => void
   disabled?: boolean
 }
 
 export function CustomCombobox({
   label,
-  placeholder = "Select a option",
+  placeholder = "Select an option",
   options,
   value,
   setValue,
   disabled = false,
-}: CustomCombobox) {
+}: CustomComboboxProps) {
   return (
     <div
       className={cn(
@@ -40,6 +40,7 @@ export function CustomCombobox({
       <Combobox
         items={options}
         value={value}
+        inputValue={value}
         onValueChange={(val) => setValue(val ?? "")}
         disabled={disabled}
       >
@@ -47,6 +48,7 @@ export function CustomCombobox({
           placeholder={placeholder}
           disabled={disabled}
           className="h-10 [&_input]:text-right border-none has-[[data-slot=input-group-control]:focus-visible]:border-input! has-[[data-slot=input-group-control]:focus-visible]:ring-0!"
+          readOnly
         />
         <ComboboxContent>
           <ComboboxEmpty>No items found.</ComboboxEmpty>

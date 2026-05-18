@@ -11,6 +11,9 @@ export interface DragOverlayState {
   hasOverlay: boolean
   overlayContent: string
   hasSource: boolean
+  hasDropAnimation: boolean
+  dropAnimationDuration: number
+  dropAnimationEasing: string
 }
 
 const DEFAULT_STATE: DragOverlayState = {
@@ -20,6 +23,9 @@ const DEFAULT_STATE: DragOverlayState = {
   hasOverlay: true,
   overlayContent: "Draggable",
   hasSource: false,
+  hasDropAnimation: true,
+  dropAnimationDuration: 250,
+  dropAnimationEasing: "ease",
 }
 
 export default function DragOverlayPage() {
@@ -31,6 +37,11 @@ export default function DragOverlayPage() {
     hasOverlay: searchParams.get("hasOverlay") !== "false",
     overlayContent: searchParams.get("overlayContent") || "Draggable",
     hasSource: searchParams.get("hasSource") === "true",
+    hasDropAnimation: searchParams.get("hasDropAnimation") !== "false",
+    dropAnimationDuration: Number(
+      searchParams.get("dropAnimationDuration") || 250,
+    ),
+    dropAnimationEasing: searchParams.get("dropAnimationEasing") || "ease",
   }))
 
   const setField = <K extends keyof DragOverlayState>(
@@ -60,6 +71,17 @@ export default function DragOverlayPage() {
 
     if (state.hasSource) params.set("hasSource", "true")
     else params.delete("hasSource")
+
+    if (!state.hasDropAnimation) params.set("hasDropAnimation", "false")
+    else params.delete("hasDropAnimation")
+
+    if (state.dropAnimationDuration !== 250)
+      params.set("dropAnimationDuration", String(state.dropAnimationDuration))
+    else params.delete("dropAnimationDuration")
+
+    if (state.dropAnimationEasing !== "ease")
+      params.set("dropAnimationEasing", state.dropAnimationEasing)
+    else params.delete("dropAnimationEasing")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
