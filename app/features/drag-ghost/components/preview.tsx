@@ -4,10 +4,10 @@ import { Draggable } from "@/features/drag-ghost/components/draggable"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
+import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
-import Section from "@/shared/components/custom/section"
 
 interface PreviewProps {
   state: DragGhostState

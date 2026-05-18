@@ -12,6 +12,7 @@ interface RulerSliderProps {
   defaultValue?: number
   onValueChange?: (value: number) => void
   className?: string
+  disabled?: boolean
 }
 
 export function RulerSlider({
@@ -24,6 +25,7 @@ export function RulerSlider({
   defaultValue,
   onValueChange,
   className,
+  disabled = false,
 }: RulerSliderProps) {
   const radixValue = value !== undefined ? [value] : undefined
   const radixDefault = [defaultValue ?? min]
@@ -49,7 +51,13 @@ export function RulerSlider({
   }
 
   return (
-    <div className={cn("flex flex-col gap-2 select-none", className)}>
+    <div
+      className={cn(
+        "flex flex-col gap-2 select-none",
+        disabled && "opacity-50 pointer-events-none",
+        className,
+      )}
+    >
       {/* Radix Slider */}
       <Slider.Root
         min={min}
@@ -58,6 +66,7 @@ export function RulerSlider({
         value={radixValue}
         defaultValue={radixDefault}
         onValueChange={handleValueChange}
+        disabled={disabled}
         className="group relative flex w-full touch-none items-center"
       >
         <Slider.Track className="relative h-10 w-full grow cursor-pointer bg-card/80 overflow-visible rounded-lg border border-border shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)]">

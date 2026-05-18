@@ -1,7 +1,7 @@
 import code from "@/features/drag-handles/components/draggable.tsx?raw"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import { InstallBlock } from "@/shared/components/container/install-block"
-import Section from "@/shared/components/custom/section"
+import Section from "@/shared/components/container/section"
 
 export default function Code() {
   return (
