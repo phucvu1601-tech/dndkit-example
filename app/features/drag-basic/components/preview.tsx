@@ -7,6 +7,7 @@ import Grid, { type GridLayout } from "@/shared/components/container/grid"
 import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
+import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: DragBasicState
@@ -24,13 +25,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     (_, i) =>
       `<Draggable id="${i + 1}"${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
-  const code = `import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "./draggable"
-
-<DragDropProvider>
-  ${draggables}
-</DragDropProvider>
-`
+  const code = generateDraggableUsageCode([draggables])
 
   return (
     <Grid layout={layout} className="gap-8">

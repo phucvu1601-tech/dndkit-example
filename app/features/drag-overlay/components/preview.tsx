@@ -1,6 +1,7 @@
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react"
 import { Draggable } from "@/features/drag-ghost/components/draggable"
 import type { DragOverlayState } from "@/features/drag-overlay/components/drag-overlay-page"
+import { generateDragOverlay } from "@/features/drag-overlay/libs/code-generator"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -10,6 +11,7 @@ import { CustomCombobox } from "@/shared/components/custom/custom-combobox"
 import CustomInput from "@/shared/components/custom/custom-input"
 import CustomSwitch from "@/shared/components/custom/custom-switch"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
+import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: DragOverlayState
@@ -38,43 +40,17 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     (_, i) =>
       `  <Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n")
-  let dropAnimation: string = ""
-  if (!hasDropAnimation)
-    dropAnimation = `<DragOverlay
-    className="fixed -z-50 w-200"
-    dropAnimation = {null}
-  >`
-  else if (dropAnimationDuration === 250 && dropAnimationEasing === "ease")
-    dropAnimation = `<DragOverlay className="fixed -z-50 w-200">`
-  else
-    dropAnimation = `<DragOverlay
-    className="fixed -z-50 w-200"
-    dropAnimation = {{duration: ${dropAnimationDuration}, easing: ${dropAnimationEasing}}}
-  >`
-  const dragOverlay = `  ${dropAnimation}
-${
-  hasSource
-    ? `    {(source) => (
-      <div className="p-2 rounded-lg bg-foreground text-background w-full h-fit cursor-grab max-w-full wrap-break-word">
-        Id: {source.id}
-      </div>
-    )}`
-    : `    <div className="p-2 rounded-lg bg-foreground text-background w-full h-fit cursor-grab max-w-full wrap-break-word">
-      ${overlayContent}
-    </div>`
-}
-  </DragOverlay>`
-  const code = [
-    `import { DragDropProvider } from "@dnd-kit/react"`,
-    `import { Draggable } from "./draggable"`,
-    ``,
-    `<DragDropProvider>`,
-    draggables,
-    hasOverlay ? dragOverlay : null,
-    `</DragDropProvider>`,
-  ]
-    .filter(Boolean)
-    .join("\n")
+
+  const dragOverlay = generateDragOverlay({
+    hasDropAnimation,
+    dropAnimationDuration,
+    dropAnimationEasing,
+    hasOverlay,
+    hasSource,
+    overlayContent,
+  })
+
+  const code = generateDraggableUsageCode([draggables, dragOverlay])
 
   return (
     <Grid layout={layout} className="gap-8">
@@ -130,7 +106,7 @@ ${
             onValueChange={(value) => setField("draggingOpacity", value)}
           />
           <CustomSwitch
-            label="Has overlay"
+            label="Enable overlay"
             value={hasOverlay}
             setValue={(value) => setField("hasOverlay", value)}
           />
@@ -150,7 +126,6 @@ ${
             label="Has drop animation"
             value={hasDropAnimation}
             setValue={(value) => setField("hasDropAnimation", value)}
-            disabled={!hasOverlay}
           />
           <RulerSlider
             label="Drop animation duration (ms)"
@@ -159,14 +134,14 @@ ${
             min={50}
             max={3000}
             step={50}
-            disabled={!hasOverlay || !hasDropAnimation}
+            disabled={!hasDropAnimation}
           />
           <CustomCombobox
             label="Drop animation easing"
             options={["ease", "linear", "ease-in", "ease-out", "ease-in-out"]}
             value={dropAnimationEasing}
             setValue={(value) => setField("dropAnimationEasing", value)}
-            disabled={!hasOverlay || !hasDropAnimation}
+            disabled={!hasDropAnimation}
           />
         </div>
       </Section>

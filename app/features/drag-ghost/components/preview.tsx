@@ -8,6 +8,7 @@ import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
+import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: DragGhostState
@@ -25,13 +26,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     (_, i) =>
       `<Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
-  const code = `import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "./draggable"
-
-<DragDropProvider>
-  ${draggables}
-</DragDropProvider>
-`
+  const code = generateDraggableUsageCode([draggables])
 
   return (
     <Grid layout={layout} className="gap-8">
