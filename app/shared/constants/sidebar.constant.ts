@@ -32,6 +32,10 @@ export const navData: NavGroup[] = [
             title: "Drag overlay",
             url: "/drag-overlay",
           },
+          {
+            title: "Modifier basic",
+            url: "/modifier-basic",
+          },
         ],
       },
     ],
