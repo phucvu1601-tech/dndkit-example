@@ -10,6 +10,7 @@ export interface ModifierBasicState {
   hasRestrictVertical: boolean
   hasRestrictHorizontal: boolean
   hasRestrictWindow: boolean
+  hasRestrictParent: boolean
 }
 
 const DEFAULT_STATE: ModifierBasicState = {
@@ -18,6 +19,7 @@ const DEFAULT_STATE: ModifierBasicState = {
   hasRestrictVertical: false,
   hasRestrictHorizontal: false,
   hasRestrictWindow: false,
+  hasRestrictParent: false,
 }
 
 export default function DragBasicPage() {
@@ -28,6 +30,7 @@ export default function DragBasicPage() {
     hasRestrictVertical: searchParams.get("hasRestrictVertical") === "true",
     hasRestrictHorizontal: searchParams.get("hasRestrictHorizontal") === "true",
     hasRestrictWindow: searchParams.get("hasRestrictWindow") === "true",
+    hasRestrictParent: searchParams.get("hasRestrictParent") === "true",
   }))
 
   const setField = <K extends keyof ModifierBasicState>(
@@ -52,6 +55,9 @@ export default function DragBasicPage() {
 
     if (state.hasRestrictWindow) params.set("hasRestrictWindow", "true")
     else params.delete("hasRestrictWindow")
+
+    if (state.hasRestrictParent) params.set("hasRestrictParent", "true")
+    else params.delete("hasRestrictParent")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])

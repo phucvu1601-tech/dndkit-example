@@ -35,7 +35,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     dropAnimationEasing,
   } = state
 
-  const draggables = Array.from(
+  const draggableItems = Array.from(
     { length: count },
     (_, i) =>
       `  <Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
@@ -50,7 +50,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     overlayContent,
   })
 
-  const code = generateDraggableUsageCode([draggables, dragOverlay])
+  const code = generateDraggableUsageCode([draggableItems, dragOverlay])
 
   return (
     <Grid layout={layout} className="gap-8">

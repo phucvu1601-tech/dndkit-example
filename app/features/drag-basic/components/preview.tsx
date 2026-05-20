@@ -20,12 +20,12 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content } = state
-  const draggables = Array.from(
+  const draggableItems = Array.from(
     { length: count },
     (_, i) =>
       `<Draggable id="${i + 1}"${content ? `>${content}</Draggable>` : "/>"}`,
   ).join("\n  ")
-  const code = generateDraggableUsageCode([draggables])
+  const code = generateDraggableUsageCode([draggableItems])
 
   return (
     <Grid layout={layout} className="gap-8">

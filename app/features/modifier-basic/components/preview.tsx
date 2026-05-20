@@ -1,6 +1,7 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "@/features/modifier-basic/components/draggable"
 import type { ModifierBasicState } from "@/features/modifier-basic/components/modifier-basic-page"
+import { generateDraggableItemsCode } from "@/features/modifier-basic/libs/code-generator"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -26,13 +27,10 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     hasRestrictVertical,
     hasRestrictHorizontal,
     hasRestrictWindow,
+    hasRestrictParent,
   } = state
-  const draggables = Array.from(
-    { length: count },
-    (_, i) =>
-      `  <Draggable id="${i + 1}"${hasRestrictVertical ? " restrictVertical" : ""}${hasRestrictHorizontal ? " restrictHorizontal" : ""}${hasRestrictWindow ? " restrictWindow" : ""}${content ? `>${content}</Draggable>` : "/>"}`,
-  ).join("\n")
-  const code = generateDraggableUsageCode([draggables])
+  const draggableItems = generateDraggableItemsCode(state)
+  const code = generateDraggableUsageCode([draggableItems])
 
   return (
     <Grid layout={layout} className="gap-8">
@@ -46,6 +44,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
                 restrictVertical={hasRestrictVertical}
                 restrictHorizontal={hasRestrictHorizontal}
                 restrictWindow={hasRestrictWindow}
+                restrictParent={hasRestrictParent}
               >
                 {content}
               </Draggable>
@@ -67,19 +66,24 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             setValue={(value) => setField("content", value)}
           />
           <CustomSwitch
-            label="Has restrict vertical"
+            label="Has restrict to vertical"
             value={hasRestrictVertical}
             setValue={(value) => setField("hasRestrictVertical", value)}
           />
           <CustomSwitch
-            label="Has restrict horizontal"
+            label="Has restrict to horizontal"
             value={hasRestrictHorizontal}
             setValue={(value) => setField("hasRestrictHorizontal", value)}
           />
           <CustomSwitch
-            label="Has restrict window"
+            label="Has restrict to window"
             value={hasRestrictWindow}
             setValue={(value) => setField("hasRestrictWindow", value)}
+          />
+          <CustomSwitch
+            label="Has restrict to parent"
+            value={hasRestrictParent}
+            setValue={(value) => setField("hasRestrictParent", value)}
           />
         </div>
       </Section>
