@@ -2,11 +2,11 @@ import type { ModifierBasicState } from "@/features/modifier-basic/components/mo
 
 export function generateDraggableItemsCode({
   count,
-  hasRestrictVertical = false,
-  hasRestrictHorizontal = false,
-  hasRestrictWindow = false,
-  hasRestrictParent = false,
-  content = "",
+  content,
+  hasRestrictVertical,
+  hasRestrictHorizontal,
+  hasRestrictWindow,
+  hasRestrictParent,
 }: ModifierBasicState): string {
   return Array.from(
     { length: count },

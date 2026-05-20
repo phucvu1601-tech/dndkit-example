@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
+import type { ModifierContainerState } from "@/features/modifier-grid/types/modifier-grid.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
 
-export interface ModifierContainerState {
-  count: number
-  content: string
-}
-
 const DEFAULT_STATE: ModifierContainerState = {
   count: 1,
   content: "",
+  gridX: 20,
+  gridY: 20,
 }
 
 export default function ModifierGridPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<ModifierContainerState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
+    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
+    content: searchParams.get("content") || DEFAULT_STATE.content,
+    gridX: Number(searchParams.get("gridX")) || DEFAULT_STATE.gridX,
+    gridY: Number(searchParams.get("gridY")) || DEFAULT_STATE.gridY,
   }))
 
   const setField = <K extends keyof ModifierContainerState>(
@@ -34,6 +34,12 @@ export default function ModifierGridPage() {
 
     if (state.content) params.set("content", state.content)
     else params.delete("content")
+
+    if (state.gridX !== 20) params.set("gridX", String(state.gridX))
+    else params.delete("gridX")
+
+    if (state.gridY !== 20) params.set("gridY", String(state.gridY))
+    else params.delete("gridY")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])

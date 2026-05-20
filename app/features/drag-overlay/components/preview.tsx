@@ -41,7 +41,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     content,
     draggingOpacity,
   })
-
   const dragOverlay = generateDragOverlay({
     hasDropAnimation,
     dropAnimationDuration,
@@ -50,7 +49,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     hasSource,
     overlayContent,
   })
-
   const code = generateDraggableUsageCode([draggableItems, dragOverlay])
 
   return (

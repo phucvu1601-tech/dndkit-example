@@ -55,10 +55,11 @@ export default function Code() {
       </Section>
       <Section label="Additional Info">
         <div className="text-xl">
-          In this example, uses a callback so the element is looked up only when
-          dragging starts, not at render time. The callback receives operation,
-          which holds drag info like the source element, and returns its
-          parentElement as the restriction boundary.
+          In this example, use `RestrictToElement` to restrict dragging within
+          the nearest parent element. Uses a callback so the element is looked
+          up only when dragging starts, not at render time. The callback
+          receives operation, which holds drag info like the source element, and
+          returns its parentElement as the restriction boundary.
         </div>
         <div className="text-xl">You can also use other approaches: </div>
         <div className="text-xl">Passing the element directly</div>

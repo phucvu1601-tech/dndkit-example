@@ -1,29 +1,22 @@
-import { RestrictToElement } from "@dnd-kit/dom/modifiers"
+import { SnapModifier } from "@dnd-kit/abstract/modifiers"
 import { useDraggable } from "@dnd-kit/react"
 
 interface DraggableProps {
   id: string
   children?: React.ReactNode
-  restrictToParent?: boolean
+  gridX?: number
+  gridY?: number
 }
 
 export function Draggable({
   id,
   children,
-  restrictToParent = false,
+  gridX = 20,
+  gridY = 20,
 }: DraggableProps) {
   const { ref } = useDraggable({
     id,
-    modifiers: restrictToParent
-      ? [
-          RestrictToElement.configure({
-            element: (operation) => {
-              const el = operation.source?.element
-              return el?.parentElement ?? null
-            },
-          }),
-        ]
-      : [],
+    modifiers: [SnapModifier.configure({ size: { x: gridX, y: gridY } })],
   })
 
   return (
