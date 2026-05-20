@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import type { DragHandleState } from "@/features/drag-handles/types/drag-handles.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
+import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -14,11 +15,13 @@ const DEFAULT_STATE: DragHandleState = {
 export default function DragHandlePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragHandleState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
-    hasHandle: searchParams.get("hasHandle") !== "false",
+    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
+    content: searchParams.get("content") || DEFAULT_STATE.content,
+    hasHandle: getBooleanSearchParam({
+      value: searchParams.get("hasHandle"),
+      defaultValue: DEFAULT_STATE.hasHandle,
+    }),
   }))
-
   const setField = <K extends keyof DragHandleState>(
     key: K,
     value: DragHandleState[K],

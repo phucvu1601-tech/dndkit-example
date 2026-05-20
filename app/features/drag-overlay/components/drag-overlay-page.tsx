@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
+import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -31,17 +32,32 @@ const DEFAULT_STATE: DragOverlayState = {
 export default function DragOverlayPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragOverlayState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
-    draggingOpacity: Number(searchParams.get("draggingOpacity") || 100),
-    hasOverlay: searchParams.get("hasOverlay") !== "false",
-    overlayContent: searchParams.get("overlayContent") || "Draggable",
-    hasSource: searchParams.get("hasSource") === "true",
-    hasDropAnimation: searchParams.get("hasDropAnimation") !== "false",
-    dropAnimationDuration: Number(
-      searchParams.get("dropAnimationDuration") || 250,
+    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
+    content: searchParams.get("content") || DEFAULT_STATE.content,
+    draggingOpacity: Number(
+      searchParams.get("draggingOpacity") || DEFAULT_STATE.draggingOpacity,
     ),
-    dropAnimationEasing: searchParams.get("dropAnimationEasing") || "ease",
+    hasOverlay: getBooleanSearchParam({
+      value: searchParams.get("hasOverlay"),
+      defaultValue: DEFAULT_STATE.hasOverlay,
+    }),
+    overlayContent:
+      searchParams.get("overlayContent") || DEFAULT_STATE.overlayContent,
+    hasSource: getBooleanSearchParam({
+      value: searchParams.get("hasSource"),
+      defaultValue: DEFAULT_STATE.hasSource,
+    }),
+    hasDropAnimation: getBooleanSearchParam({
+      value: searchParams.get("hasDropAnimation"),
+      defaultValue: DEFAULT_STATE.hasDropAnimation,
+    }),
+    dropAnimationDuration: Number(
+      searchParams.get("dropAnimationDuration") ||
+        DEFAULT_STATE.dropAnimationDuration,
+    ),
+    dropAnimationEasing:
+      searchParams.get("dropAnimationEasing") ||
+      DEFAULT_STATE.dropAnimationEasing,
   }))
 
   const setField = <K extends keyof DragOverlayState>(
