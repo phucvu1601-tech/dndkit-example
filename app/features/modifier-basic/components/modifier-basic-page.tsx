@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
+import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -27,10 +28,22 @@ export default function DragBasicPage() {
   const [state, setState] = useState<ModifierBasicState>(() => ({
     count: Number(searchParams.get("count")) || 1,
     content: searchParams.get("content") || "",
-    hasRestrictVertical: searchParams.get("hasRestrictVertical") === "true",
-    hasRestrictHorizontal: searchParams.get("hasRestrictHorizontal") === "true",
-    hasRestrictWindow: searchParams.get("hasRestrictWindow") === "true",
-    hasRestrictParent: searchParams.get("hasRestrictParent") === "true",
+    hasRestrictVertical: getBooleanSearchParam({
+      value: searchParams.get("hasRestrictVertical"),
+      defaultValue: DEFAULT_STATE.hasRestrictVertical,
+    }),
+    hasRestrictHorizontal: getBooleanSearchParam({
+      value: searchParams.get("hasRestrictHorizontal"),
+      defaultValue: DEFAULT_STATE.hasRestrictHorizontal,
+    }),
+    hasRestrictWindow: getBooleanSearchParam({
+      value: searchParams.get("hasRestrictWindow"),
+      defaultValue: DEFAULT_STATE.hasRestrictWindow,
+    }),
+    hasRestrictParent: getBooleanSearchParam({
+      value: searchParams.get("hasRestrictParent"),
+      defaultValue: DEFAULT_STATE.hasRestrictParent,
+    }),
   }))
 
   const setField = <K extends keyof ModifierBasicState>(

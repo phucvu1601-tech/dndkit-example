@@ -36,6 +36,10 @@ export const navData: NavGroup[] = [
             title: "Modifier basic",
             url: "/modifier-basic",
           },
+          {
+            title: "Modifier grid",
+            url: "/modifier-grid",
+          },
         ],
       },
     ],

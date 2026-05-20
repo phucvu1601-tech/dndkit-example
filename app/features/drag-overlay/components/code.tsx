@@ -15,6 +15,17 @@ export default function Code() {
           component
         </div>
         <div className="text-xl">
+          {"Reference: "}
+          <a
+            href={"https://dndkit.com/react/components/drag-overlay/"}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:font-semibold"
+          >
+            DragOverlay docs
+          </a>
+        </div>
+        <div className="text-xl">
           {"In this example, I’m using the Draggable component from "}
           <Link to={"/drag-ghost"} className="underline hover:font-semibold">
             Drag ghost
