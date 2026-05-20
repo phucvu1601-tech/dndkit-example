@@ -1,6 +1,6 @@
 import { useLocation } from "react-router"
-import { LocaleSelector } from "@/shared/components/header/locale-selector"
-import { ThemeSelector } from "@/shared/components/header/theme-selector"
+import { LocaleSelector } from "@/shared/components/layout-ui/locale-selector"
+import { ThemeSelector } from "@/shared/components/layout-ui/theme-selector"
 import {
   Breadcrumb,
   BreadcrumbItem,

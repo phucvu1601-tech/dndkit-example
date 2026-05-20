@@ -1,4 +1,4 @@
-import type { ModifierBasicState } from "@/features/modifier-basic/components/modifier-basic-page"
+import type { ModifierBasicState } from "@/features/modifier-basic/types/modifier-basic.type"
 
 export function generateDraggableItemsCode({
   count,
@@ -6,7 +6,6 @@ export function generateDraggableItemsCode({
   hasRestrictVertical,
   hasRestrictHorizontal,
   hasRestrictWindow,
-  hasRestrictParent,
 }: ModifierBasicState): string {
   return Array.from(
     { length: count },
@@ -15,7 +14,6 @@ export function generateDraggableItemsCode({
       (hasRestrictVertical ? " restrictVertical" : "") +
       (hasRestrictHorizontal ? " restrictHorizontal" : "") +
       (hasRestrictWindow ? " restrictWindow" : "") +
-      (hasRestrictParent ? " restrictParent" : "") +
       (content ? `>${content}</Draggable>` : "/>"),
   ).join("\n")
 }

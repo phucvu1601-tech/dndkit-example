@@ -2,8 +2,8 @@ import { ChevronRight } from "lucide-react"
 import * as React from "react"
 import { Link } from "react-router"
 import dndkitLogo from "@/shared/assets/dnd-kit-logo.svg"
-import NavItem from "@/shared/components/sidebar/nav-item"
-import { SearchForm } from "@/shared/components/sidebar/search-form"
+import NavItem from "@/shared/components/layout-ui/nav-item"
+import { SearchForm } from "@/shared/components/layout-ui/search-form"
 import {
   Collapsible,
   CollapsibleContent,
@@ -43,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         {navData.map((navGroup) => (
           <>
-            <SidebarGroupLabel className="ml-2 uppercase">
+            <SidebarGroupLabel className="ml-2 mt-4 -mb-3 uppercase">
               {navGroup.title}
             </SidebarGroupLabel>
             <SidebarGroup>

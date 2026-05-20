@@ -1,47 +1,46 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "@/features/modifier-grid/components/draggable"
-import { generateDraggableItemsCode } from "@/features/modifier-grid/libs/code-generator"
-import type { ModifierGridState } from "@/features/modifier-grid/types/modifier-grid.type"
+import { Draggable } from "@/features/modifier-container/components/draggable"
+import type { ModifierContainerState } from "@/features/modifier-container/components/modifier-container-page"
+import { generateDraggableItemsCode } from "@/features/modifier-container/libs/code-generator"
 import { CodeBlock } from "@/shared/components/container/code-block"
-import DemoGridBackground from "@/shared/components/container/demo-grid-background"
+import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
 import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
-import { RulerSlider } from "@/shared/components/custom/ruler-slider"
+import CustomSwitch from "@/shared/components/custom/custom-switch"
 import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
-  state: ModifierGridState
-  setField: <K extends keyof ModifierGridState>(
+  state: ModifierContainerState
+  setField: <K extends keyof ModifierContainerState>(
     key: K,
-    value: ModifierGridState[K],
+    value: ModifierContainerState[K],
   ) => void
   layout: GridLayout
 }
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
-  const { count, content, gridX, gridY } = state
+  const { count, content, hasRestrictParent } = state
   const draggableItems = generateDraggableItemsCode(state)
   const code = generateDraggableUsageCode([draggableItems])
 
   return (
     <Grid layout={layout} className="gap-8">
       <Section label="Display">
-        <DemoGridBackground width={gridX} height={gridY}>
+        <DemoBackground>
           <DragDropProvider>
             {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
               <Draggable
                 key={i + 1}
                 id={String(i + 1)}
-                gridX={gridX}
-                gridY={gridY}
+                restrictParent={hasRestrictParent}
               >
                 {content}
               </Draggable>
             ))}
           </DragDropProvider>
-        </DemoGridBackground>
+        </DemoBackground>
       </Section>
       <Section label="Customize">
         <div className="grid grid-cols-1 @lg:grid-cols-2 @4xl:grid-cols-3 gap-4">
@@ -56,19 +55,10 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             value={content}
             setValue={(value) => setField("content", value)}
           />
-          <RulerSlider
-            label="Grid size X"
-            value={gridX}
-            onValueChange={(value) => setField("gridX", value)}
-            step={2}
-            min={10}
-          />
-          <RulerSlider
-            label="Grid size Y"
-            value={gridY}
-            onValueChange={(value) => setField("gridY", value)}
-            step={2}
-            min={10}
+          <CustomSwitch
+            label="Has restrict to parent"
+            value={hasRestrictParent}
+            setValue={(value) => setField("hasRestrictParent", value)}
           />
         </div>
       </Section>

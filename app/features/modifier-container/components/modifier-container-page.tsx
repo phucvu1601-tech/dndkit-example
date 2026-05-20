@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { ModifierGridState } from "@/features/modifier-grid/types/modifier-grid.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
+import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
-const DEFAULT_STATE: ModifierGridState = {
-  count: 1,
-  content: "",
-  gridX: 20,
-  gridY: 20,
+export interface ModifierContainerState {
+  count: number
+  content: string
+  hasRestrictParent: boolean
 }
 
-export default function ModifierGridPage() {
+const DEFAULT_STATE: ModifierContainerState = {
+  count: 1,
+  content: "",
+  hasRestrictParent: false,
+}
+
+export default function ModifierContainerPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<ModifierGridState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
-    gridX: Number(searchParams.get("gridX")) || DEFAULT_STATE.gridX,
-    gridY: Number(searchParams.get("gridY")) || DEFAULT_STATE.gridY,
+  const [state, setState] = useState<ModifierContainerState>(() => ({
+    count: Number(searchParams.get("count")) || 1,
+    content: searchParams.get("content") || "",
+    hasRestrictParent: getBooleanSearchParam({
+      value: searchParams.get("hasRestrictParent"),
+      defaultValue: DEFAULT_STATE.hasRestrictParent,
+    }),
   }))
 
-  const setField = <K extends keyof ModifierGridState>(
+  const setField = <K extends keyof ModifierContainerState>(
     key: K,
-    value: ModifierGridState[K],
+    value: ModifierContainerState[K],
   ) => setState((prev) => ({ ...prev, [key]: value }))
 
   useEffect(() => {
@@ -35,11 +42,8 @@ export default function ModifierGridPage() {
     if (state.content) params.set("content", state.content)
     else params.delete("content")
 
-    if (state.gridX !== 20) params.set("gridX", String(state.gridX))
-    else params.delete("gridX")
-
-    if (state.gridY !== 20) params.set("gridY", String(state.gridY))
-    else params.delete("gridY")
+    if (state.hasRestrictParent) params.set("hasRestrictParent", "true")
+    else params.delete("hasRestrictParent")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
@@ -51,7 +55,7 @@ export default function ModifierGridPage() {
 
   return (
     <DemoPage
-      title="Modifier grid"
+      title="Modifier container"
       hasChanges={searchParams.size !== 0}
       onReset={handleReset}
       renderPreview={(layout) => (

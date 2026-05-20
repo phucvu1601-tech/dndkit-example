@@ -12,7 +12,8 @@ export default [
     route("drag-handles", "routes/drag/drag-handles.tsx"),
     route("drag-ghost", "routes/drag/drag-ghost.tsx"),
     route("drag-overlay", "routes/drag/drag-overlay.tsx"),
-    route("modifier-basic", "routes/drag/modifier-basic.tsx"),
-    route("modifier-grid", "routes/drag/modifier-grid.tsx"),
+    route("modifier-basic", "routes/modifier/modifier-basic.tsx"),
+    route("modifier-container", "routes/modifier/modifier-container.tsx"),
+    route("modifier-grid", "routes/modifier/modifier-grid.tsx"),
   ]),
 ] satisfies RouteConfig

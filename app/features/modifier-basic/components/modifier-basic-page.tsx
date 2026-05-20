@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
+import type { ModifierBasicState } from "@/features/modifier-basic/types/modifier-basic.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
-
-export interface ModifierBasicState {
-  count: number
-  content: string
-  hasRestrictVertical: boolean
-  hasRestrictHorizontal: boolean
-  hasRestrictWindow: boolean
-  hasRestrictParent: boolean
-}
 
 const DEFAULT_STATE: ModifierBasicState = {
   count: 1,
@@ -20,10 +12,9 @@ const DEFAULT_STATE: ModifierBasicState = {
   hasRestrictVertical: false,
   hasRestrictHorizontal: false,
   hasRestrictWindow: false,
-  hasRestrictParent: false,
 }
 
-export default function DragBasicPage() {
+export default function ModifierBasicPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<ModifierBasicState>(() => ({
     count: Number(searchParams.get("count")) || 1,
@@ -39,10 +30,6 @@ export default function DragBasicPage() {
     hasRestrictWindow: getBooleanSearchParam({
       value: searchParams.get("hasRestrictWindow"),
       defaultValue: DEFAULT_STATE.hasRestrictWindow,
-    }),
-    hasRestrictParent: getBooleanSearchParam({
-      value: searchParams.get("hasRestrictParent"),
-      defaultValue: DEFAULT_STATE.hasRestrictParent,
     }),
   }))
 
@@ -68,9 +55,6 @@ export default function DragBasicPage() {
 
     if (state.hasRestrictWindow) params.set("hasRestrictWindow", "true")
     else params.delete("hasRestrictWindow")
-
-    if (state.hasRestrictParent) params.set("hasRestrictParent", "true")
-    else params.delete("hasRestrictParent")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])

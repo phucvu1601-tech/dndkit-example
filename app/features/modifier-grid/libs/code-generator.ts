@@ -1,11 +1,11 @@
-import type { ModifierContainerState } from "@/features/modifier-grid/types/modifier-grid.type"
+import type { ModifierGridState } from "@/features/modifier-grid/types/modifier-grid.type"
 
 export function generateDraggableItemsCode({
   count,
   content,
   gridX,
   gridY,
-}: ModifierContainerState): string {
+}: ModifierGridState): string {
   return Array.from(
     { length: count },
     (_, i) =>

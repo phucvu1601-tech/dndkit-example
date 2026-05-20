@@ -1,7 +1,7 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "@/features/modifier-basic/components/draggable"
-import type { ModifierBasicState } from "@/features/modifier-basic/components/modifier-basic-page"
 import { generateDraggableItemsCode } from "@/features/modifier-basic/libs/code-generator"
+import type { ModifierBasicState } from "@/features/modifier-basic/types/modifier-basic.type"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -27,7 +27,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     hasRestrictVertical,
     hasRestrictHorizontal,
     hasRestrictWindow,
-    hasRestrictParent,
   } = state
   const draggableItems = generateDraggableItemsCode(state)
   const code = generateDraggableUsageCode([draggableItems])
@@ -44,7 +43,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
                 restrictVertical={hasRestrictVertical}
                 restrictHorizontal={hasRestrictHorizontal}
                 restrictWindow={hasRestrictWindow}
-                restrictParent={hasRestrictParent}
               >
                 {content}
               </Draggable>
@@ -79,11 +77,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             label="Has restrict to window"
             value={hasRestrictWindow}
             setValue={(value) => setField("hasRestrictWindow", value)}
-          />
-          <CustomSwitch
-            label="Has restrict to parent"
-            value={hasRestrictParent}
-            setValue={(value) => setField("hasRestrictParent", value)}
           />
         </div>
       </Section>
