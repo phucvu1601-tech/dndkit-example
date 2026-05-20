@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
+import type { DragGhostState } from "@/features/drag-ghost/types/drag-ghost.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
-
-export interface DragGhostState {
-  count: number
-  content: string
-  draggingOpacity: number
-}
 
 const DEFAULT_STATE: DragGhostState = {
   count: 1,
@@ -19,9 +14,11 @@ const DEFAULT_STATE: DragGhostState = {
 export default function DragGhostPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragGhostState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
-    draggingOpacity: Number(searchParams.get("draggingOpacity") || 100),
+    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
+    content: searchParams.get("content") || DEFAULT_STATE.content,
+    draggingOpacity: Number(
+      searchParams.get("draggingOpacity") || DEFAULT_STATE.draggingOpacity,
+    ),
   }))
 
   const setField = <K extends keyof DragGhostState>(

@@ -1,6 +1,7 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import type { DragGhostState } from "@/features/drag-ghost/components/drag-ghost-page"
 import { Draggable } from "@/features/drag-ghost/components/draggable"
+import { generateDraggableItemsCode } from "@/features/drag-ghost/libs/code-generator"
+import type { DragGhostState } from "@/features/drag-ghost/types/drag-ghost.type"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -21,11 +22,7 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, draggingOpacity } = state
-  const draggableItems = Array.from(
-    { length: count },
-    (_, i) =>
-      `<Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
-  ).join("\n  ")
+  const draggableItems = generateDraggableItemsCode(state)
   const code = generateDraggableUsageCode([draggableItems])
 
   return (

@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
+import type { DragBasicState } from "@/features/drag-basic/types/drag-basic.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
-
-export interface DragBasicState {
-  count: number
-  content: string
-}
 
 const DEFAULT_STATE: DragBasicState = {
   count: 1,
@@ -17,8 +13,8 @@ const DEFAULT_STATE: DragBasicState = {
 export default function DragBasicPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragBasicState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
+    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
+    content: searchParams.get("content") || DEFAULT_STATE.content,
   }))
 
   const setField = <K extends keyof DragBasicState>(

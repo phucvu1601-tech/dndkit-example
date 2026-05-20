@@ -1,5 +1,6 @@
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react"
 import { Draggable } from "@/features/drag-ghost/components/draggable"
+import { generateDraggableItemsCode } from "@/features/drag-ghost/libs/code-generator"
 import type { DragOverlayState } from "@/features/drag-overlay/components/drag-overlay-page"
 import { generateDragOverlay } from "@/features/drag-overlay/libs/code-generator"
 import { CodeBlock } from "@/shared/components/container/code-block"
@@ -35,11 +36,11 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     dropAnimationEasing,
   } = state
 
-  const draggableItems = Array.from(
-    { length: count },
-    (_, i) =>
-      `  <Draggable id="${i + 1}"${draggingOpacity === 100 ? "" : ` draggingOpacity={${draggingOpacity}}`}${content ? `>${content}</Draggable>` : "/>"}`,
-  ).join("\n")
+  const draggableItems = generateDraggableItemsCode({
+    count,
+    content,
+    draggingOpacity,
+  })
 
   const dragOverlay = generateDragOverlay({
     hasDropAnimation,

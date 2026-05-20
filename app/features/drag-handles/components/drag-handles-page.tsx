@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
+import type { DragHandleState } from "@/features/drag-handles/types/drag-handles.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
-
-export interface DragHandleState {
-  count: number
-  content: string
-  hasHandle: boolean
-}
 
 const DEFAULT_STATE: DragHandleState = {
   count: 1,
