@@ -15,5 +15,9 @@ export default [
     route("modifier-basic", "routes/modifier/modifier-basic.tsx"),
     route("modifier-container", "routes/modifier/modifier-container.tsx"),
     route("modifier-grid", "routes/modifier/modifier-grid.tsx"),
+    route(
+      "sensor-basic-constraint",
+      "routes/sensor/sensor-basic-constraint.tsx",
+    ),
   ]),
 ] satisfies RouteConfig

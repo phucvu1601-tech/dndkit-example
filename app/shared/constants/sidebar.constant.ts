@@ -51,6 +51,15 @@ export const navData: NavGroup[] = [
           },
         ],
       },
+      {
+        title: "Sensor",
+        items: [
+          {
+            title: "Sensor basic constraint",
+            url: "/sensor-basic-constraint",
+          },
+        ],
+      },
     ],
   },
   {
