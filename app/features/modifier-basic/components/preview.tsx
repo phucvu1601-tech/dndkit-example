@@ -14,7 +14,6 @@ import CustomSwitch from "@/shared/components/custom/custom-switch"
 import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
-  generateNonDefaultProps,
 } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
@@ -34,14 +33,9 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     restrictHorizontal,
     restrictWindow,
   } = state
-  const props = generateNonDefaultProps({
+  const draggableItems = generateDraggableItemsCode({
     state,
     defaultState: DEFAULT_MODIFIER_BASIC,
-  })
-  const draggableItems = generateDraggableItemsCode({
-    count,
-    content,
-    props,
     isInline: true,
   })
   const code = generateDraggableUsageCode([draggableItems])

@@ -17,7 +17,6 @@ import { RulerSlider } from "@/shared/components/custom/ruler-slider"
 import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
-  generateNonDefaultProps,
 } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
@@ -41,8 +40,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     dropAnimationDuration,
     dropAnimationEasing,
   } = state
-
-  const props = generateNonDefaultProps({
+  const draggableItems = generateDraggableItemsCode({
     state,
     defaultState: DEFAULT_DRAG_OVERLAY,
     excludedKeys: new Set<keyof DragOverlayState>([
@@ -55,11 +53,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
       "dropAnimationDuration",
       "dropAnimationEasing",
     ]),
-  })
-  const draggableItems = generateDraggableItemsCode({
-    count,
-    content,
-    props,
     isInline: true,
   })
   const dragOverlay = generateDragOverlay({

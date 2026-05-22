@@ -14,7 +14,6 @@ import { RulerSlider } from "@/shared/components/custom/ruler-slider"
 import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
-  generateNonDefaultProps,
 } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
@@ -28,14 +27,9 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, delay, tolerance, distance } = state
-  const props = generateNonDefaultProps({
+  const draggableItems = generateDraggableItemsCode({
     state,
     defaultState: DEFAULT_SENSOR_BASIC_CONSTRAINT,
-  })
-  const draggableItems = generateDraggableItemsCode({
-    count,
-    content,
-    props,
   })
   const code = generateDraggableUsageCode([draggableItems])
 

@@ -13,7 +13,6 @@ import CustomInput from "@/shared/components/custom/custom-input"
 import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
-  generateNonDefaultProps,
 } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
@@ -27,14 +26,9 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content } = state
-  const props = generateNonDefaultProps({
+  const draggableItems = generateDraggableItemsCode({
     state,
     defaultState: DEFAULT_DRAG_BASIC,
-  })
-  const draggableItems = generateDraggableItemsCode({
-    count,
-    content,
-    props,
     isInline: true,
   })
   const code = generateDraggableUsageCode([draggableItems])
