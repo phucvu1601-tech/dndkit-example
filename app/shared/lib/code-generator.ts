@@ -3,26 +3,24 @@ function formatPropValue(k: string, v: string): string {
   else return ` ${k}={${v}}`
 }
 
-function generateJSXElement(
+function generateJSX(
   tag: string,
   props: Record<string, string>,
   content?: string,
 ): string {
   const propEntries = Object.entries(props)
   const formattedProps = propEntries.map(([k, v]) => formatPropValue(k, v))
-  const propsStr =
-    propEntries.length <= 1
-      ? formattedProps.join("")
-      : "\n" +
-        propEntries
-          .map(([k, v]) => `    ${formatPropValue(k, v).trim()}`)
-          .filter(Boolean)
-          .join("\n") +
-        "\n  "
+  const isMultiline = propEntries.length > 1
 
-  return content
-    ? `<${tag}${propsStr}>${content}</${tag}>`
-    : `<${tag}${propsStr}/>`
+  const propsStr = isMultiline
+    ? `\n${formattedProps.map((p) => `    ${p.trim()}`).join("\n")}\n  `
+    : formattedProps.join("")
+
+  if (!content) return `<${tag}${propsStr}/>`
+
+  return isMultiline
+    ? `<${tag}${propsStr}>\n    ${content}\n  </${tag}>`
+    : `<${tag}${propsStr}>${content}</${tag}>`
 }
 
 function generateInlineJSX(
@@ -81,7 +79,7 @@ export function generateDraggableItemsCode({
     : Array.from(
         { length: count },
         (_, i) =>
-          `  ${generateJSXElement("Draggable", { id: `"${i + 1}"`, ...props }, content)}`,
+          `  ${generateJSX("Draggable", { id: `"${i + 1}"`, ...props }, content)}`,
       ).join("\n")
 }
 
