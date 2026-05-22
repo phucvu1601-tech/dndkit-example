@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
-import { getBooleanSearchParam } from "@/shared/lib/search-params"
+import {
+  getBooleanSearchParam,
+  syncParamsWithState,
+} from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -47,22 +50,11 @@ export default function ModifierBasicPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
-
-    if (state.count !== 1) params.set("count", String(state.count))
-    else params.delete("count")
-
-    if (state.content) params.set("content", state.content)
-    else params.delete("content")
-
-    if (state.restrictVertical) params.set("restrictVertical", "true")
-    else params.delete("restrictVertical")
-
-    if (state.restrictHorizontal) params.set("restrictHorizontal", "true")
-    else params.delete("restrictHorizontal")
-
-    if (state.restrictWindow) params.set("restrictWindow", "true")
-    else params.delete("restrictWindow")
-
+    syncParamsWithState({
+      state,
+      params,
+      defaultState: DEFAULT_MODIFIER_BASIC,
+    })
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 

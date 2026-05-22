@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
+import { syncParamsWithState } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -28,13 +29,11 @@ export default function DragBasicPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
-
-    if (state.count !== 1) params.set("count", String(state.count))
-    else params.delete("count")
-
-    if (state.content) params.set("content", state.content)
-    else params.delete("content")
-
+    syncParamsWithState({
+      state,
+      params,
+      defaultState: DEFAULT_DRAG_BASIC,
+    })
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 

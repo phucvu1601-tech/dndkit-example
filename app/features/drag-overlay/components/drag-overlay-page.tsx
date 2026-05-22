@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
-import { getBooleanSearchParam } from "@/shared/lib/search-params"
+import {
+  getBooleanSearchParam,
+  syncParamsWithState,
+} from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -68,38 +71,11 @@ export default function DragOverlayPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams)
-
-    if (state.count !== 1) params.set("count", String(state.count))
-    else params.delete("count")
-
-    if (state.content) params.set("content", state.content)
-    else params.delete("content")
-
-    if (state.draggingOpacity !== 100)
-      params.set("draggingOpacity", String(state.draggingOpacity))
-    else params.delete("draggingOpacity")
-
-    if (!state.hasOverlay) params.set("hasOverlay", "false")
-    else params.delete("hasOverlay")
-
-    if (state.overlayContent !== "Draggable")
-      params.set("overlayContent", state.overlayContent)
-    else params.delete("overlayContent")
-
-    if (state.hasSource) params.set("hasSource", "true")
-    else params.delete("hasSource")
-
-    if (!state.hasDropAnimation) params.set("hasDropAnimation", "false")
-    else params.delete("hasDropAnimation")
-
-    if (state.dropAnimationDuration !== 250)
-      params.set("dropAnimationDuration", String(state.dropAnimationDuration))
-    else params.delete("dropAnimationDuration")
-
-    if (state.dropAnimationEasing !== "ease")
-      params.set("dropAnimationEasing", state.dropAnimationEasing)
-    else params.delete("dropAnimationEasing")
-
+    syncParamsWithState({
+      state,
+      params,
+      defaultState: DEFAULT_DRAG_OVERLAY,
+    })
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
