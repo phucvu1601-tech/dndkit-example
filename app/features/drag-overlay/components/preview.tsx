@@ -1,7 +1,9 @@
 import { DragDropProvider, DragOverlay } from "@dnd-kit/react"
 import { Draggable } from "@/features/drag-ghost/components/draggable"
-import { generateDraggableItemsCode } from "@/features/drag-ghost/libs/code-generator"
-import type { DragOverlayState } from "@/features/drag-overlay/components/drag-overlay-page"
+import {
+  DEFAULT_DRAG_OVERLAY,
+  type DragOverlayState,
+} from "@/features/drag-overlay/components/drag-overlay-page"
 import { generateDragOverlay } from "@/features/drag-overlay/libs/code-generator"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
@@ -12,7 +14,11 @@ import { CustomCombobox } from "@/shared/components/custom/custom-combobox"
 import CustomInput from "@/shared/components/custom/custom-input"
 import CustomSwitch from "@/shared/components/custom/custom-switch"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
-import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
+import {
+  generateDraggableItemsCode,
+  generateDraggableUsageCode,
+  generateNonDefaultProps,
+} from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: DragOverlayState
@@ -36,10 +42,25 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
     dropAnimationEasing,
   } = state
 
+  const props = generateNonDefaultProps({
+    state,
+    defaultState: DEFAULT_DRAG_OVERLAY,
+    excludedKeys: new Set<keyof DragOverlayState>([
+      "count",
+      "content",
+      "hasOverlay",
+      "overlayContent",
+      "hasSource",
+      "hasDropAnimation",
+      "dropAnimationDuration",
+      "dropAnimationEasing",
+    ]),
+  })
   const draggableItems = generateDraggableItemsCode({
     count,
     content,
-    draggingOpacity,
+    props,
+    isInline: true,
   })
   const dragOverlay = generateDragOverlay({
     hasDropAnimation,

@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { DragBasicState } from "@/features/drag-basic/types/drag-basic.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
 
-const DEFAULT_STATE: DragBasicState = {
+export interface DragBasicState {
+  count: number
+  content: string
+}
+
+export const DEFAULT_DRAG_BASIC: DragBasicState = {
   count: 1,
   content: "",
 }
@@ -13,8 +17,8 @@ const DEFAULT_STATE: DragBasicState = {
 export default function DragBasicPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragBasicState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
+    count: Number(searchParams.get("count")) || DEFAULT_DRAG_BASIC.count,
+    content: searchParams.get("content") || DEFAULT_DRAG_BASIC.content,
   }))
 
   const setField = <K extends keyof DragBasicState>(
@@ -35,7 +39,7 @@ export default function DragBasicPage() {
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_DRAG_BASIC)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

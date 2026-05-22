@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { DragGhostState } from "@/features/drag-ghost/types/drag-ghost.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
 
-const DEFAULT_STATE: DragGhostState = {
+export interface DragGhostState {
+  count: number
+  content: string
+  draggingOpacity: number
+}
+
+export const DEFAULT_DRAG_GHOST: DragGhostState = {
   count: 1,
   content: "",
   draggingOpacity: 100,
@@ -14,10 +19,10 @@ const DEFAULT_STATE: DragGhostState = {
 export default function DragGhostPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragGhostState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
+    count: Number(searchParams.get("count")) || DEFAULT_DRAG_GHOST.count,
+    content: searchParams.get("content") || DEFAULT_DRAG_GHOST.content,
     draggingOpacity: Number(
-      searchParams.get("draggingOpacity") || DEFAULT_STATE.draggingOpacity,
+      searchParams.get("draggingOpacity") || DEFAULT_DRAG_GHOST.draggingOpacity,
     ),
   }))
 
@@ -43,7 +48,7 @@ export default function DragGhostPage() {
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_DRAG_GHOST)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

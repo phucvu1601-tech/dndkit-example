@@ -1,7 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "@/features/modifier-grid/components/draggable"
-import { generateDraggableItemsCode } from "@/features/modifier-grid/libs/code-generator"
-import type { ModifierGridState } from "@/features/modifier-grid/types/modifier-grid.type"
+import {
+  DEFAULT_MODIFIER_GRID,
+  type ModifierGridState,
+} from "@/features/modifier-grid/components/modifier-grid-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoGridBackground from "@/shared/components/container/demo-grid-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -9,7 +11,11 @@ import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
-import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
+import {
+  generateDraggableItemsCode,
+  generateDraggableUsageCode,
+  generateNonDefaultProps,
+} from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: ModifierGridState
@@ -22,7 +28,16 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, gridX, gridY } = state
-  const draggableItems = generateDraggableItemsCode(state)
+  const props = generateNonDefaultProps({
+    state,
+    defaultState: DEFAULT_MODIFIER_GRID,
+  })
+  const draggableItems = generateDraggableItemsCode({
+    count,
+    content,
+    props,
+    isInline: true,
+  })
   const code = generateDraggableUsageCode([draggableItems])
 
   return (

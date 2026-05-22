@@ -1,7 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "@/features/sensor-basic-constraint/components/draggable"
-import { generateDraggableItemsCode } from "@/features/sensor-basic-constraint/libs/code-generator"
-import type { SensorBasicConstraintState } from "@/features/sensor-basic-constraint/types/sensor-basic-constraint.type"
+import {
+  DEFAULT_SENSOR_BASIC_CONSTRAINT,
+  type SensorBasicConstraintState,
+} from "@/features/sensor-basic-constraint/components/sensor-basic-constraint-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -9,7 +11,11 @@ import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import { RulerSlider } from "@/shared/components/custom/ruler-slider"
-import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
+import {
+  generateDraggableItemsCode,
+  generateDraggableUsageCode,
+  generateNonDefaultProps,
+} from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: SensorBasicConstraintState
@@ -22,7 +28,15 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, delay, tolerance, distance } = state
-  const draggableItems = generateDraggableItemsCode(state)
+  const props = generateNonDefaultProps({
+    state,
+    defaultState: DEFAULT_SENSOR_BASIC_CONSTRAINT,
+  })
+  const draggableItems = generateDraggableItemsCode({
+    count,
+    content,
+    props,
+  })
   const code = generateDraggableUsageCode([draggableItems])
 
   return (

@@ -1,7 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react"
+import {
+  DEFAULT_DRAG_HANDLE,
+  type DragHandleState,
+} from "@/features/drag-handles/components/drag-handles-page"
 import { Draggable } from "@/features/drag-handles/components/draggable"
-import { generateDraggableItemsCode } from "@/features/drag-handles/libs/code-generator"
-import type { DragHandleState } from "@/features/drag-handles/types/drag-handles.type"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -9,7 +11,11 @@ import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import CustomSwitch from "@/shared/components/custom/custom-switch"
-import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
+import {
+  generateDraggableItemsCode,
+  generateDraggableUsageCode,
+  generateNonDefaultProps,
+} from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: DragHandleState
@@ -22,7 +28,16 @@ interface PreviewProps {
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, hasHandle } = state
-  const draggableItems = generateDraggableItemsCode(state)
+  const props = generateNonDefaultProps({
+    state,
+    defaultState: DEFAULT_DRAG_HANDLE,
+  })
+  const draggableItems = generateDraggableItemsCode({
+    count,
+    content,
+    props,
+    isInline: true,
+  })
   const code = generateDraggableUsageCode([draggableItems])
 
   return (

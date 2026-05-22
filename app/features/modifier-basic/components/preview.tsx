@@ -1,7 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "@/features/modifier-basic/components/draggable"
-import { generateDraggableItemsCode } from "@/features/modifier-basic/libs/code-generator"
-import type { ModifierBasicState } from "@/features/modifier-basic/types/modifier-basic.type"
+import {
+  DEFAULT_MODIFIER_BASIC,
+  type ModifierBasicState,
+} from "@/features/modifier-basic/components/modifier-basic-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -9,7 +11,11 @@ import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
 import CustomSwitch from "@/shared/components/custom/custom-switch"
-import { generateDraggableUsageCode } from "@/shared/lib/code-generator"
+import {
+  generateDraggableItemsCode,
+  generateDraggableUsageCode,
+  generateNonDefaultProps,
+} from "@/shared/lib/code-generator"
 
 interface PreviewProps {
   state: ModifierBasicState
@@ -24,11 +30,20 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
   const {
     count,
     content,
-    hasRestrictVertical,
-    hasRestrictHorizontal,
-    hasRestrictWindow,
+    restrictVertical,
+    restrictHorizontal,
+    restrictWindow,
   } = state
-  const draggableItems = generateDraggableItemsCode(state)
+  const props = generateNonDefaultProps({
+    state,
+    defaultState: DEFAULT_MODIFIER_BASIC,
+  })
+  const draggableItems = generateDraggableItemsCode({
+    count,
+    content,
+    props,
+    isInline: true,
+  })
   const code = generateDraggableUsageCode([draggableItems])
 
   return (
@@ -40,9 +55,9 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
               <Draggable
                 key={i + 1}
                 id={String(i + 1)}
-                restrictVertical={hasRestrictVertical}
-                restrictHorizontal={hasRestrictHorizontal}
-                restrictWindow={hasRestrictWindow}
+                restrictVertical={restrictVertical}
+                restrictHorizontal={restrictHorizontal}
+                restrictWindow={restrictWindow}
               >
                 {content}
               </Draggable>
@@ -65,18 +80,18 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
           />
           <CustomSwitch
             label="Has restrict to vertical"
-            value={hasRestrictVertical}
-            setValue={(value) => setField("hasRestrictVertical", value)}
+            value={restrictVertical}
+            setValue={(value) => setField("restrictVertical", value)}
           />
           <CustomSwitch
             label="Has restrict to horizontal"
-            value={hasRestrictHorizontal}
-            setValue={(value) => setField("hasRestrictHorizontal", value)}
+            value={restrictHorizontal}
+            setValue={(value) => setField("restrictHorizontal", value)}
           />
           <CustomSwitch
             label="Has restrict to window"
-            value={hasRestrictWindow}
-            setValue={(value) => setField("hasRestrictWindow", value)}
+            value={restrictWindow}
+            setValue={(value) => setField("restrictWindow", value)}
           />
         </div>
       </Section>

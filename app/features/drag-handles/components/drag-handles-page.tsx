@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { DragHandleState } from "@/features/drag-handles/types/drag-handles.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
-const DEFAULT_STATE: DragHandleState = {
+export interface DragHandleState {
+  count: number
+  content: string
+  hasHandle: boolean
+}
+
+export const DEFAULT_DRAG_HANDLE: DragHandleState = {
   count: 1,
   content: "",
   hasHandle: true,
@@ -15,11 +20,11 @@ const DEFAULT_STATE: DragHandleState = {
 export default function DragHandlePage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragHandleState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
+    count: Number(searchParams.get("count")) || DEFAULT_DRAG_HANDLE.count,
+    content: searchParams.get("content") || DEFAULT_DRAG_HANDLE.content,
     hasHandle: getBooleanSearchParam({
       value: searchParams.get("hasHandle"),
-      defaultValue: DEFAULT_STATE.hasHandle,
+      defaultValue: DEFAULT_DRAG_HANDLE.hasHandle,
     }),
   }))
   const setField = <K extends keyof DragHandleState>(
@@ -43,7 +48,7 @@ export default function DragHandlePage() {
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_DRAG_HANDLE)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

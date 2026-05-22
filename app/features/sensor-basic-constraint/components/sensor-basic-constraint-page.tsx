@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { SensorBasicConstraintState } from "@/features/sensor-basic-constraint/types/sensor-basic-constraint.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import Code from "./code"
 import Preview from "./preview"
 
-export const DEFAULT_STATE: SensorBasicConstraintState = {
+export interface SensorBasicConstraintState {
+  count: number
+  content: string
+  delay: number
+  tolerance: number
+  distance: number
+}
+
+export const DEFAULT_SENSOR_BASIC_CONSTRAINT: SensorBasicConstraintState = {
   count: 1,
   content: "",
   delay: 2000,
@@ -16,11 +23,20 @@ export const DEFAULT_STATE: SensorBasicConstraintState = {
 export default function SensorBasicConstraintPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<SensorBasicConstraintState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
-    delay: Number(searchParams.get("delay")) || DEFAULT_STATE.delay,
-    tolerance: Number(searchParams.get("tolerance")) || DEFAULT_STATE.tolerance,
-    distance: Number(searchParams.get("distance")) || DEFAULT_STATE.distance,
+    count:
+      Number(searchParams.get("count")) ||
+      DEFAULT_SENSOR_BASIC_CONSTRAINT.count,
+    content:
+      searchParams.get("content") || DEFAULT_SENSOR_BASIC_CONSTRAINT.content,
+    delay:
+      Number(searchParams.get("delay")) ||
+      DEFAULT_SENSOR_BASIC_CONSTRAINT.delay,
+    tolerance:
+      Number(searchParams.get("tolerance")) ||
+      DEFAULT_SENSOR_BASIC_CONSTRAINT.tolerance,
+    distance:
+      Number(searchParams.get("distance")) ||
+      DEFAULT_SENSOR_BASIC_CONSTRAINT.distance,
   }))
 
   const setField = <K extends keyof SensorBasicConstraintState>(
@@ -51,7 +67,7 @@ export default function SensorBasicConstraintPage() {
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_SENSOR_BASIC_CONSTRAINT)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

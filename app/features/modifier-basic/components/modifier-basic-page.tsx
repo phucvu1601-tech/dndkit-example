@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { ModifierBasicState } from "@/features/modifier-basic/types/modifier-basic.type"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import { getBooleanSearchParam } from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
-const DEFAULT_STATE: ModifierBasicState = {
+export interface ModifierBasicState {
+  count: number
+  content: string
+  restrictVertical: boolean
+  restrictHorizontal: boolean
+  restrictWindow: boolean
+}
+
+export const DEFAULT_MODIFIER_BASIC: ModifierBasicState = {
   count: 1,
   content: "",
-  hasRestrictVertical: false,
-  hasRestrictHorizontal: false,
-  hasRestrictWindow: false,
+  restrictVertical: false,
+  restrictHorizontal: false,
+  restrictWindow: false,
 }
 
 export default function ModifierBasicPage() {
@@ -19,17 +26,17 @@ export default function ModifierBasicPage() {
   const [state, setState] = useState<ModifierBasicState>(() => ({
     count: Number(searchParams.get("count")) || 1,
     content: searchParams.get("content") || "",
-    hasRestrictVertical: getBooleanSearchParam({
-      value: searchParams.get("hasRestrictVertical"),
-      defaultValue: DEFAULT_STATE.hasRestrictVertical,
+    restrictVertical: getBooleanSearchParam({
+      value: searchParams.get("restrictVertical"),
+      defaultValue: DEFAULT_MODIFIER_BASIC.restrictVertical,
     }),
-    hasRestrictHorizontal: getBooleanSearchParam({
-      value: searchParams.get("hasRestrictHorizontal"),
-      defaultValue: DEFAULT_STATE.hasRestrictHorizontal,
+    restrictHorizontal: getBooleanSearchParam({
+      value: searchParams.get("restrictHorizontal"),
+      defaultValue: DEFAULT_MODIFIER_BASIC.restrictHorizontal,
     }),
-    hasRestrictWindow: getBooleanSearchParam({
-      value: searchParams.get("hasRestrictWindow"),
-      defaultValue: DEFAULT_STATE.hasRestrictWindow,
+    restrictWindow: getBooleanSearchParam({
+      value: searchParams.get("restrictWindow"),
+      defaultValue: DEFAULT_MODIFIER_BASIC.restrictWindow,
     }),
   }))
 
@@ -47,20 +54,20 @@ export default function ModifierBasicPage() {
     if (state.content) params.set("content", state.content)
     else params.delete("content")
 
-    if (state.hasRestrictVertical) params.set("hasRestrictVertical", "true")
-    else params.delete("hasRestrictVertical")
+    if (state.restrictVertical) params.set("restrictVertical", "true")
+    else params.delete("restrictVertical")
 
-    if (state.hasRestrictHorizontal) params.set("hasRestrictHorizontal", "true")
-    else params.delete("hasRestrictHorizontal")
+    if (state.restrictHorizontal) params.set("restrictHorizontal", "true")
+    else params.delete("restrictHorizontal")
 
-    if (state.hasRestrictWindow) params.set("hasRestrictWindow", "true")
-    else params.delete("hasRestrictWindow")
+    if (state.restrictWindow) params.set("restrictWindow", "true")
+    else params.delete("restrictWindow")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_MODIFIER_BASIC)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

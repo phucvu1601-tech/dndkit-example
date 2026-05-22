@@ -17,7 +17,7 @@ export interface DragOverlayState {
   dropAnimationEasing: string
 }
 
-const DEFAULT_STATE: DragOverlayState = {
+export const DEFAULT_DRAG_OVERLAY: DragOverlayState = {
   count: 1,
   content: "",
   draggingOpacity: 100,
@@ -32,32 +32,33 @@ const DEFAULT_STATE: DragOverlayState = {
 export default function DragOverlayPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useState<DragOverlayState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_STATE.count,
-    content: searchParams.get("content") || DEFAULT_STATE.content,
+    count: Number(searchParams.get("count")) || DEFAULT_DRAG_OVERLAY.count,
+    content: searchParams.get("content") || DEFAULT_DRAG_OVERLAY.content,
     draggingOpacity: Number(
-      searchParams.get("draggingOpacity") || DEFAULT_STATE.draggingOpacity,
+      searchParams.get("draggingOpacity") ||
+        DEFAULT_DRAG_OVERLAY.draggingOpacity,
     ),
     hasOverlay: getBooleanSearchParam({
       value: searchParams.get("hasOverlay"),
-      defaultValue: DEFAULT_STATE.hasOverlay,
+      defaultValue: DEFAULT_DRAG_OVERLAY.hasOverlay,
     }),
     overlayContent:
-      searchParams.get("overlayContent") || DEFAULT_STATE.overlayContent,
+      searchParams.get("overlayContent") || DEFAULT_DRAG_OVERLAY.overlayContent,
     hasSource: getBooleanSearchParam({
       value: searchParams.get("hasSource"),
-      defaultValue: DEFAULT_STATE.hasSource,
+      defaultValue: DEFAULT_DRAG_OVERLAY.hasSource,
     }),
     hasDropAnimation: getBooleanSearchParam({
       value: searchParams.get("hasDropAnimation"),
-      defaultValue: DEFAULT_STATE.hasDropAnimation,
+      defaultValue: DEFAULT_DRAG_OVERLAY.hasDropAnimation,
     }),
     dropAnimationDuration: Number(
       searchParams.get("dropAnimationDuration") ||
-        DEFAULT_STATE.dropAnimationDuration,
+        DEFAULT_DRAG_OVERLAY.dropAnimationDuration,
     ),
     dropAnimationEasing:
       searchParams.get("dropAnimationEasing") ||
-      DEFAULT_STATE.dropAnimationEasing,
+      DEFAULT_DRAG_OVERLAY.dropAnimationEasing,
   }))
 
   const setField = <K extends keyof DragOverlayState>(
@@ -103,7 +104,7 @@ export default function DragOverlayPage() {
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_DRAG_OVERLAY)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 

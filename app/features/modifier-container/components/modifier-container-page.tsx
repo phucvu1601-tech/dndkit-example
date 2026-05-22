@@ -8,13 +8,13 @@ import Preview from "./preview"
 export interface ModifierContainerState {
   count: number
   content: string
-  hasRestrictParent: boolean
+  restrictParent: boolean
 }
 
-const DEFAULT_STATE: ModifierContainerState = {
+export const DEFAULT_MODIFIER_CONTAINER: ModifierContainerState = {
   count: 1,
   content: "",
-  hasRestrictParent: false,
+  restrictParent: false,
 }
 
 export default function ModifierContainerPage() {
@@ -22,9 +22,9 @@ export default function ModifierContainerPage() {
   const [state, setState] = useState<ModifierContainerState>(() => ({
     count: Number(searchParams.get("count")) || 1,
     content: searchParams.get("content") || "",
-    hasRestrictParent: getBooleanSearchParam({
-      value: searchParams.get("hasRestrictParent"),
-      defaultValue: DEFAULT_STATE.hasRestrictParent,
+    restrictParent: getBooleanSearchParam({
+      value: searchParams.get("restrictParent"),
+      defaultValue: DEFAULT_MODIFIER_CONTAINER.restrictParent,
     }),
   }))
 
@@ -42,14 +42,14 @@ export default function ModifierContainerPage() {
     if (state.content) params.set("content", state.content)
     else params.delete("content")
 
-    if (state.hasRestrictParent) params.set("hasRestrictParent", "true")
-    else params.delete("hasRestrictParent")
+    if (state.restrictParent) params.set("restrictParent", "true")
+    else params.delete("restrictParent")
 
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_STATE)
+    setState(DEFAULT_MODIFIER_CONTAINER)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 
