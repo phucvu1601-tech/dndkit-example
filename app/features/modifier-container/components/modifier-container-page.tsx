@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import {
-  getBooleanSearchParam,
+  initStateFromParams,
   syncParamsWithState,
 } from "@/shared/lib/search-params"
 import Code from "./code"
@@ -22,14 +22,9 @@ export const DEFAULT_MODIFIER_CONTAINER: ModifierContainerState = {
 
 export default function ModifierContainerPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<ModifierContainerState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
-    restrictParent: getBooleanSearchParam({
-      value: searchParams.get("restrictParent"),
-      defaultValue: DEFAULT_MODIFIER_CONTAINER.restrictParent,
-    }),
-  }))
+  const [state, setState] = useState<ModifierContainerState>(() =>
+    initStateFromParams(searchParams, DEFAULT_MODIFIER_CONTAINER),
+  )
 
   const setField = <K extends keyof ModifierContainerState>(
     key: K,

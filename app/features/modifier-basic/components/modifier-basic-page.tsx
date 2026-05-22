@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
 import {
-  getBooleanSearchParam,
+  initStateFromParams,
   syncParamsWithState,
 } from "@/shared/lib/search-params"
 import Code from "./code"
@@ -26,22 +26,9 @@ export const DEFAULT_MODIFIER_BASIC: ModifierBasicState = {
 
 export default function ModifierBasicPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<ModifierBasicState>(() => ({
-    count: Number(searchParams.get("count")) || 1,
-    content: searchParams.get("content") || "",
-    restrictVertical: getBooleanSearchParam({
-      value: searchParams.get("restrictVertical"),
-      defaultValue: DEFAULT_MODIFIER_BASIC.restrictVertical,
-    }),
-    restrictHorizontal: getBooleanSearchParam({
-      value: searchParams.get("restrictHorizontal"),
-      defaultValue: DEFAULT_MODIFIER_BASIC.restrictHorizontal,
-    }),
-    restrictWindow: getBooleanSearchParam({
-      value: searchParams.get("restrictWindow"),
-      defaultValue: DEFAULT_MODIFIER_BASIC.restrictWindow,
-    }),
-  }))
+  const [state, setState] = useState<ModifierBasicState>(() =>
+    initStateFromParams(searchParams, DEFAULT_MODIFIER_BASIC),
+  )
 
   const setField = <K extends keyof ModifierBasicState>(
     key: K,

@@ -1,15 +1,28 @@
-export function getBooleanSearchParam({
-  value,
-  defaultValue,
-}: {
-  value: string | null
-  defaultValue: boolean
-}) {
-  if (defaultValue) {
-    return value !== "false"
-  }
+export const initStateFromParams = <
+  T extends Record<keyof T, string | number | boolean>,
+>(
+  searchParams: URLSearchParams,
+  defaultState: T,
+): T => {
+  return (Object.keys(defaultState) as (keyof T & string)[]).reduce(
+    (acc, key) => {
+      const value = searchParams.get(key)
+      const defaultValue = defaultState[key]
 
-  return value === "true"
+      if (typeof defaultValue === "boolean") {
+        acc[key] = (
+          defaultValue ? value !== "false" : value === "true"
+        ) as T[typeof key]
+      } else if (typeof defaultValue === "number") {
+        acc[key] = (Number(value) || defaultValue) as T[typeof key]
+      } else {
+        acc[key] = (value || defaultValue) as T[typeof key]
+      }
+
+      return acc
+    },
+    {} as T,
+  )
 }
 
 export const syncParamsWithState = <

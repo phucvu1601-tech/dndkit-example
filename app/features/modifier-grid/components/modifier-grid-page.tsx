@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
-import { syncParamsWithState } from "@/shared/lib/search-params"
+import {
+  initStateFromParams,
+  syncParamsWithState,
+} from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -21,12 +24,9 @@ export const DEFAULT_MODIFIER_GRID: ModifierGridState = {
 
 export default function ModifierGridPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<ModifierGridState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_MODIFIER_GRID.count,
-    content: searchParams.get("content") || DEFAULT_MODIFIER_GRID.content,
-    gridX: Number(searchParams.get("gridX")) || DEFAULT_MODIFIER_GRID.gridX,
-    gridY: Number(searchParams.get("gridY")) || DEFAULT_MODIFIER_GRID.gridY,
-  }))
+  const [state, setState] = useState<ModifierGridState>(() =>
+    initStateFromParams(searchParams, DEFAULT_MODIFIER_GRID),
+  )
 
   const setField = <K extends keyof ModifierGridState>(
     key: K,

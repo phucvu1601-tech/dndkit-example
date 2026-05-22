@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
-import { syncParamsWithState } from "@/shared/lib/search-params"
+import {
+  initStateFromParams,
+  syncParamsWithState,
+} from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -23,22 +26,9 @@ export const DEFAULT_SENSOR_BASIC_CONSTRAINT: SensorBasicConstraintState = {
 
 export default function SensorBasicConstraintPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<SensorBasicConstraintState>(() => ({
-    count:
-      Number(searchParams.get("count")) ||
-      DEFAULT_SENSOR_BASIC_CONSTRAINT.count,
-    content:
-      searchParams.get("content") || DEFAULT_SENSOR_BASIC_CONSTRAINT.content,
-    delay:
-      Number(searchParams.get("delay")) ||
-      DEFAULT_SENSOR_BASIC_CONSTRAINT.delay,
-    tolerance:
-      Number(searchParams.get("tolerance")) ||
-      DEFAULT_SENSOR_BASIC_CONSTRAINT.tolerance,
-    distance:
-      Number(searchParams.get("distance")) ||
-      DEFAULT_SENSOR_BASIC_CONSTRAINT.distance,
-  }))
+  const [state, setState] = useState<SensorBasicConstraintState>(() =>
+    initStateFromParams(searchParams, DEFAULT_SENSOR_BASIC_CONSTRAINT),
+  )
 
   const setField = <K extends keyof SensorBasicConstraintState>(
     key: K,

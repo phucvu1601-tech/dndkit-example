@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 import { DemoPage } from "@/shared/components/container/demo-page"
-import { syncParamsWithState } from "@/shared/lib/search-params"
+import {
+  initStateFromParams,
+  syncParamsWithState,
+} from "@/shared/lib/search-params"
 import Code from "./code"
 import Preview from "./preview"
 
@@ -19,13 +22,9 @@ export const DEFAULT_DRAG_GHOST: DragGhostState = {
 
 export default function DragGhostPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<DragGhostState>(() => ({
-    count: Number(searchParams.get("count")) || DEFAULT_DRAG_GHOST.count,
-    content: searchParams.get("content") || DEFAULT_DRAG_GHOST.content,
-    draggingOpacity: Number(
-      searchParams.get("draggingOpacity") || DEFAULT_DRAG_GHOST.draggingOpacity,
-    ),
-  }))
+  const [state, setState] = useState<DragGhostState>(() =>
+    initStateFromParams(searchParams, DEFAULT_DRAG_GHOST),
+  )
 
   const setField = <K extends keyof DragGhostState>(
     key: K,
