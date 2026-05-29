@@ -1,15 +1,14 @@
 import { DragDropProvider } from "@dnd-kit/react"
 import {
-  DEFAULT_MODIFIER_GRID,
-  type ModifierGridState,
-} from "@/features/modifier-grid/components/modifier-grid-page"
+  DEFAULT_DROP_BASIC,
+  type DropBasicState,
+} from "@/features/drop-basic/components/drop-basic-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
-import DemoGridBackground from "@/shared/components/container/demo-grid-background"
+import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
 import Section from "@/shared/components/container/section"
 import Count from "@/shared/components/custom/count"
 import CustomInput from "@/shared/components/custom/custom-input"
-import { RulerSlider } from "@/shared/components/custom/ruler-slider"
 import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
@@ -17,19 +16,19 @@ import {
 import { Draggable } from "./draggable"
 
 interface PreviewProps {
-  state: ModifierGridState
-  setField: <K extends keyof ModifierGridState>(
+  state: DropBasicState
+  setField: <K extends keyof DropBasicState>(
     key: K,
-    value: ModifierGridState[K],
+    value: DropBasicState[K],
   ) => void
   layout: GridLayout
 }
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
-  const { count, content, gridX, gridY } = state
+  const { count, content } = state
   const draggableItems = generateDraggableItemsCode({
     state,
-    defaultState: DEFAULT_MODIFIER_GRID,
+    defaultState: DEFAULT_DROP_BASIC,
     isInline: true,
   })
   const code = generateDraggableUsageCode([draggableItems])
@@ -37,20 +36,15 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
   return (
     <Grid layout={layout} className="gap-8">
       <Section label="Display">
-        <DemoGridBackground width={gridX} height={gridY}>
+        <DemoBackground>
           <DragDropProvider>
             {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
-              <Draggable
-                key={i + 1}
-                id={String(i + 1)}
-                gridX={gridX}
-                gridY={gridY}
-              >
+              <Draggable key={i + 1} id={String(i + 1)}>
                 {content}
               </Draggable>
             ))}
           </DragDropProvider>
-        </DemoGridBackground>
+        </DemoBackground>
       </Section>
       <Section label="Customize">
         <div className="grid grid-cols-1 @lg:grid-cols-2 @4xl:grid-cols-3 gap-4">
@@ -64,20 +58,6 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             label="Children content"
             value={content}
             setValue={(value) => setField("content", value)}
-          />
-          <RulerSlider
-            label="Grid size X"
-            value={gridX}
-            onValueChange={(value) => setField("gridX", value)}
-            step={2}
-            min={10}
-          />
-          <RulerSlider
-            label="Grid size Y"
-            value={gridY}
-            onValueChange={(value) => setField("gridY", value)}
-            step={2}
-            min={10}
           />
         </div>
       </Section>

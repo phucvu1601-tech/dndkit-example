@@ -23,5 +23,6 @@ export default [
       "sensor-dynamic-constraint",
       "routes/sensor/sensor-dynamic-constraint.tsx",
     ),
+    route("drop-basic", "routes/drop/drop-basic.tsx"),
   ]),
 ] satisfies RouteConfig

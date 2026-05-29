@@ -74,7 +74,7 @@ export const navData: NavGroup[] = [
         items: [
           {
             title: "Drop basic",
-            url: "#",
+            url: "/drop-basic",
           },
           {
             title: "Drop multiple",

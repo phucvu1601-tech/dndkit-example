@@ -1,5 +1,4 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "@/features/modifier-container/components/draggable"
 import {
   DEFAULT_MODIFIER_CONTAINER,
   type ModifierContainerState,
@@ -15,6 +14,7 @@ import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
 } from "@/shared/lib/code-generator"
+import { Draggable } from "./draggable"
 
 interface PreviewProps {
   state: ModifierContainerState

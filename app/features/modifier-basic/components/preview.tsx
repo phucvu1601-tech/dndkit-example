@@ -1,5 +1,4 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "@/features/modifier-basic/components/draggable"
 import {
   DEFAULT_MODIFIER_BASIC,
   type ModifierBasicState,
@@ -15,6 +14,7 @@ import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
 } from "@/shared/lib/code-generator"
+import { Draggable } from "./draggable"
 
 interface PreviewProps {
   state: ModifierBasicState

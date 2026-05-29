@@ -1,5 +1,4 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "@/features/sensor-basic-constraint/components/draggable"
 import {
   DEFAULT_SENSOR_BASIC_CONSTRAINT,
   type SensorBasicConstraintState,
@@ -15,6 +14,7 @@ import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
 } from "@/shared/lib/code-generator"
+import { Draggable } from "./draggable"
 
 interface PreviewProps {
   state: SensorBasicConstraintState

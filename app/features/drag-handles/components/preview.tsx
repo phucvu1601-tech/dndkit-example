@@ -3,7 +3,6 @@ import {
   DEFAULT_DRAG_HANDLE,
   type DragHandleState,
 } from "@/features/drag-handles/components/drag-handles-page"
-import { Draggable } from "@/features/drag-handles/components/draggable"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -15,6 +14,7 @@ import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
 } from "@/shared/lib/code-generator"
+import { Draggable } from "./draggable"
 
 interface PreviewProps {
   state: DragHandleState

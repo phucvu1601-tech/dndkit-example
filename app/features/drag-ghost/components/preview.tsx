@@ -3,7 +3,6 @@ import {
   DEFAULT_DRAG_GHOST,
   type DragGhostState,
 } from "@/features/drag-ghost/components/drag-ghost-page"
-import { Draggable } from "@/features/drag-ghost/components/draggable"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -15,6 +14,7 @@ import {
   generateDraggableItemsCode,
   generateDraggableUsageCode,
 } from "@/shared/lib/code-generator"
+import { Draggable } from "./draggable"
 
 interface PreviewProps {
   state: DragGhostState
