@@ -1,9 +1,9 @@
 import { DragDropProvider } from "@dnd-kit/react"
-import { Draggable } from "@/features/sensor-basic-constraint/components/draggable"
+import { Draggable } from "@/features/sensor-dynamic-constraint/components/draggable"
 import {
-  DEFAULT_SENSOR_BASIC_CONSTRAINT,
-  type SensorBasicConstraintState,
-} from "@/features/sensor-basic-constraint/components/sensor-basic-constraint-page"
+  DEFAULT_SENSOR_DYNAMIC_CONSTRAINT,
+  type SensorDynamicConstraintState,
+} from "@/features/sensor-dynamic-constraint/components/sensor-dynamic-constraint-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -17,10 +17,10 @@ import {
 } from "@/shared/lib/code-generator"
 
 interface PreviewProps {
-  state: SensorBasicConstraintState
-  setField: <K extends keyof SensorBasicConstraintState>(
+  state: SensorDynamicConstraintState
+  setField: <K extends keyof SensorDynamicConstraintState>(
     key: K,
-    value: SensorBasicConstraintState[K],
+    value: SensorDynamicConstraintState[K],
   ) => void
   layout: GridLayout
 }
@@ -29,7 +29,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, delay, tolerance, distance } = state
   const draggableItems = generateDraggableItemsCode({
     state,
-    defaultState: DEFAULT_SENSOR_BASIC_CONSTRAINT,
+    defaultState: DEFAULT_SENSOR_DYNAMIC_CONSTRAINT,
   })
   const code = generateDraggableUsageCode([draggableItems])
 
@@ -67,21 +67,21 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             setValue={(value) => setField("content", value)}
           />
           <RulerSlider
-            label="Delay (ms)"
+            label="Delay on Touch (ms)"
             value={delay}
             onValueChange={(value) => setField("delay", value)}
             step={100}
             max={5000}
           />
           <RulerSlider
-            label="Tolerance (px)"
+            label="Tolerance on Touch (px)"
             value={tolerance}
             onValueChange={(value) => setField("tolerance", value)}
             step={20}
             max={2000}
           />
           <RulerSlider
-            label="Distance (px)"
+            label="Distance on Touch (px)"
             value={distance}
             onValueChange={(value) => setField("distance", value)}
             step={20}

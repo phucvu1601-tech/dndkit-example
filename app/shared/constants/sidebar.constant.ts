@@ -58,6 +58,10 @@ export const navData: NavGroup[] = [
             title: "Sensor basic constraint",
             url: "/sensor-basic-constraint",
           },
+          {
+            title: "Sensor dynamic constraint",
+            url: "/sensor-dynamic-constraint",
+          },
         ],
       },
     ],
