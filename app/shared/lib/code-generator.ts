@@ -1,12 +1,13 @@
-type PropValue = string | number | boolean
+type PropValue = string | number | boolean | { var: string }
 
 function formatPropValue(k: string, v: PropValue): string {
   if (v === true) return ` ${k}`
   if (typeof v === "string") return ` ${k}="${v}"`
+  if (typeof v === "object") return ` ${k}={${v.var}}`
   return ` ${k}={${v}}`
 }
 
-function generateJSX(
+export function generateJSX(
   tag: string,
   props: Record<string, PropValue>,
   content?: string,
@@ -24,7 +25,7 @@ function generateJSX(
     : `<${tag}${propsStr}/>`
 }
 
-function generateInlineJSX(
+export function generateInlineJSX(
   tag: string,
   props: Record<string, PropValue>,
   content?: string,
@@ -37,7 +38,7 @@ function generateInlineJSX(
     : `<${tag}${propsStr}/>`
 }
 
-function generateNonDefaultProps<T extends object>({
+export function generateNonDefaultProps<T extends object>({
   state,
   defaultState,
   excludedKeys,
