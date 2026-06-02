@@ -1,3 +1,5 @@
+import isEqual from "lodash/isEqual"
+
 type PropValue = string | number | boolean | { var: string }
 
 function formatPropValue(k: string, v: PropValue): string {
@@ -5,6 +7,14 @@ function formatPropValue(k: string, v: PropValue): string {
   if (typeof v === "string") return ` ${k}="${v}"`
   if (typeof v === "object") return ` ${k}={${v.var}}`
   return ` ${k}={${v}}`
+}
+
+export function addIndent(str: string, tabPlus: number = 1) {
+  const spaces = " ".repeat(tabPlus * 2)
+  return str
+    .split("\n")
+    .map((line) => spaces + line)
+    .join("\n")
 }
 
 export function generateJSX(
@@ -17,11 +27,11 @@ export function generateJSX(
   const multiline = entries.length > 1
 
   const propsStr = multiline
-    ? `\n${formatted.map((p) => `    ${p.trim()}`).join("\n")}\n  `
+    ? `\n${formatted.map((p) => `  ${p.trim()}`).join("\n")}\n`
     : formatted.join("")
 
   return content
-    ? `<${tag}${propsStr}${multiline ? "" : ""}>${multiline ? `\n    ${content}\n  ` : content}</${tag}>`
+    ? `<${tag}${propsStr}${multiline ? "" : ""}>${multiline ? `\n  ${content}\n` : content}</${tag}>`
     : `<${tag}${propsStr}/>`
 }
 
@@ -51,7 +61,7 @@ export function generateNonDefaultProps<T extends object>({
 
   for (const key in defaultState) {
     const k = key as keyof T
-    if (excludedKeys.has(k) || state[k] === defaultState[k]) continue
+    if (excludedKeys.has(k) || isEqual(state[k], defaultState[k])) continue
     props[key] = state[k] as PropValue
   }
 
@@ -81,7 +91,7 @@ export function generateDraggableItemsCode<
   return Array.from(
     { length: count },
     (_, i) =>
-      `  ${generate("Draggable", { id: String(i + 1), ...props }, content)}`,
+      `${addIndent(generate("Draggable", { id: String(i + 1), ...props }, content))}`,
   ).join("\n")
 }
 
@@ -91,5 +101,51 @@ import { Draggable } from "./draggable"
 
 <DragDropProvider>
 ${children.join("\n")}
+</DragDropProvider>`
+}
+
+export function generateDroppableItemsCode<T extends { dropCount: number }>({
+  state,
+  defaultState,
+  excludedKeys = new Set(["dropCount"]) as Set<keyof T>,
+  isInline = false,
+}: {
+  state: T
+  defaultState: T
+  excludedKeys?: Set<keyof T>
+  isInline?: boolean
+}): string {
+  const { dropCount } = state
+  const props = generateNonDefaultProps<T>({
+    state,
+    defaultState,
+    excludedKeys,
+  })
+  const generate = isInline ? generateInlineJSX : generateJSX
+  return Array.from(
+    { length: dropCount },
+    (_, i) =>
+      `${generate("Droppable", { id: String(i + 1), ...props }, `{parent === "${i + 1}" && draggable}`)}`,
+  ).join("\n")
+}
+
+export const generateDroppableUsageCode = (children: string[]): string => {
+  return `import { DragDropProvider } from "@dnd-kit/react"
+import { Draggable } from "./draggable"
+
+const [parent, setParent] = useState<string>()
+const draggable = <Draggable id="draggable" />
+
+const handleDragEnd = (event: DragEndEvent) => {
+  const { target } = event.operation
+  if (event.canceled) return
+  setParent(target ? String(target.id) : undefined)
+}
+
+<DragDropProvider onDragEnd={handleDragEnd}>
+  <div className="h-10">{!parent && draggable}</div>
+  <div className="flex flex-wrap gap-2">
+${addIndent(children.join("\n"), 2)}
+  </div>
 </DragDropProvider>`
 }

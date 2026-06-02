@@ -151,7 +151,13 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
           />
           <CustomCombobox
             label="Drop animation easing"
-            options={["ease", "linear", "ease-in", "ease-out", "ease-in-out"]}
+            options={[
+              "ease",
+              "linear",
+              "ease-in",
+              "ease-out",
+              "ease-in-out",
+            ].map((value) => ({ value, label: value }))}
             value={dropAnimationEasing}
             setValue={(value) => setField("dropAnimationEasing", value)}
             disabled={!hasDropAnimation}

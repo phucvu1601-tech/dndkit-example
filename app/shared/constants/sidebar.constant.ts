@@ -81,8 +81,8 @@ export const navData: NavGroup[] = [
             url: "/drop-basic",
           },
           {
-            title: "Drop multiple",
-            url: "#",
+            title: "Drop detector",
+            url: "/drop-detector",
           },
         ],
       },

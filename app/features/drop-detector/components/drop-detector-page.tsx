@@ -8,23 +8,25 @@ import {
 import Code from "./code"
 import Preview from "./preview"
 
-export interface DropBasicState {
+export interface DropDetectorState {
   dropCount: number
+  collisionDetector: string
 }
 
-export const DEFAULT_DROP_BASIC: DropBasicState = {
+export const DEFAULT_DROP_DETECTOR: DropDetectorState = {
   dropCount: 1,
+  collisionDetector: "defaultCollisionDetection",
 }
 
-export default function DropBasicPage() {
+export default function DropDetectorPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<DropBasicState>(() =>
-    initStateFromParams(searchParams, DEFAULT_DROP_BASIC),
+  const [state, setState] = useState<DropDetectorState>(() =>
+    initStateFromParams(searchParams, DEFAULT_DROP_DETECTOR),
   )
 
-  const setField = <K extends keyof DropBasicState>(
+  const setField = <K extends keyof DropDetectorState>(
     key: K,
-    value: DropBasicState[K],
+    value: DropDetectorState[K],
   ) => setState((prev) => ({ ...prev, [key]: value }))
 
   useEffect(() => {
@@ -32,19 +34,19 @@ export default function DropBasicPage() {
     syncParamsWithState({
       state,
       params,
-      defaultState: DEFAULT_DROP_BASIC,
+      defaultState: DEFAULT_DROP_DETECTOR,
     })
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_DROP_BASIC)
+    setState(DEFAULT_DROP_DETECTOR)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 
   return (
     <DemoPage
-      title="Droppable basic"
+      title="Droppable detector"
       hasChanges={searchParams.size !== 0}
       onReset={handleReset}
       renderPreview={(layout) => (

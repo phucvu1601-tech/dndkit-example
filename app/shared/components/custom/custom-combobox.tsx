@@ -13,7 +13,7 @@ import { cn } from "@/shared/lib/utils"
 interface CustomComboboxProps {
   label: string
   placeholder?: string
-  options: string[]
+  options: { value: string; label: string }[]
   value: string
   setValue: (value: string) => void
   disabled?: boolean
@@ -53,9 +53,9 @@ export function CustomCombobox({
         <ComboboxContent>
           <ComboboxEmpty>No items found.</ComboboxEmpty>
           <ComboboxList>
-            {(item) => (
-              <ComboboxItem key={item} value={item}>
-                {item}
+            {({ value, label }) => (
+              <ComboboxItem key={value} value={value}>
+                {label}
               </ComboboxItem>
             )}
           </ComboboxList>
