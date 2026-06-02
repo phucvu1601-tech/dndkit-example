@@ -48,6 +48,7 @@ export const generateDroppableUsageCode = (
       : ""
   return `${collisionImport}import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "./draggable"
+import { Droppable } from "./droppable"
 
 const [parent, setParent] = useState<string>()
 const draggable = <Draggable id="draggable" />

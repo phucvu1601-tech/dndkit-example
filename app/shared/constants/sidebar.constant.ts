@@ -88,4 +88,18 @@ export const navData: NavGroup[] = [
       },
     ],
   },
+  {
+    title: "Sortable",
+    navMains: [
+      {
+        title: "Sort",
+        items: [
+          {
+            title: "Sort basic",
+            url: "/sort-basic",
+          },
+        ],
+      },
+    ],
+  },
 ]

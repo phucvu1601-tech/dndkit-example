@@ -132,6 +132,7 @@ export function generateDroppableItemsCode<T extends { dropCount: number }>({
 export const generateDroppableUsageCode = (children: string[]): string => {
   return `import { DragDropProvider } from "@dnd-kit/react"
 import { Draggable } from "./draggable"
+import { Droppable } from "./droppable"
 
 const [parent, setParent] = useState<string>()
 const draggable = <Draggable id="draggable" />
@@ -148,4 +149,38 @@ const handleDragEnd = (event: DragEndEvent) => {
 ${addIndent(children.join("\n"), 2)}
   </div>
 </DragDropProvider>`
+}
+
+export function generateSortableItemsCode<
+  T extends { count: number; content: string },
+>({
+  state,
+  defaultState,
+  excludedKeys = new Set(["count", "content"]) as Set<keyof T>,
+  isInline = false,
+}: {
+  state: T
+  defaultState: T
+  excludedKeys?: Set<keyof T>
+  isInline?: boolean
+}): string {
+  const { count, content } = state
+  const props = generateNonDefaultProps<T>({
+    state,
+    defaultState,
+    excludedKeys,
+  })
+  const generate = isInline ? generateInlineJSX : generateJSX
+  return `{Array.from({ length: ${count} }, (_, i) => i + 1).map((i, index) => (
+  ${generate("Sortable", { key: { var: "i" }, id: { var: "String(i)" }, index: { var: "index" }, ...props }, content)}
+))}`
+}
+
+export const generateSortableUsageCode = (children: string[]): string => {
+  return `import { DragDropProvider } from "@dnd-kit/react"
+import { Sortable } from "./sortable"
+
+<div className="grid grid-cols-10">
+${addIndent(children.join("\n"))}
+</div>`
 }
