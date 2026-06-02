@@ -51,7 +51,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
         <DemoBackground>
           <DragDropProvider onDragEnd={handleDragEnd}>
             {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
-              <Draggable key={i + 1} id={String(i + 1)} x={x} y={y}>
+              <Draggable key={i} id={String(i)} x={x} y={y}>
                 {content}
               </Draggable>
             ))}

@@ -40,12 +40,7 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
         <DemoGridBackground width={gridX} height={gridY}>
           <DragDropProvider>
             {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
-              <Draggable
-                key={i + 1}
-                id={String(i + 1)}
-                gridX={gridX}
-                gridY={gridY}
-              >
+              <Draggable key={i} id={String(i)} gridX={gridX} gridY={gridY}>
                 {content}
               </Draggable>
             ))}

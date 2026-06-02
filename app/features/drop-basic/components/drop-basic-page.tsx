@@ -9,13 +9,13 @@ import Code from "./code"
 import Preview from "./preview"
 
 export interface DropBasicState {
-  count: number
   content: string
+  dropCount: number
 }
 
 export const DEFAULT_DROP_BASIC: DropBasicState = {
-  count: 1,
   content: "",
+  dropCount: 1,
 }
 
 export default function DropBasicPage() {

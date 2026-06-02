@@ -47,8 +47,8 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
           <DragDropProvider>
             {Array.from({ length: count }, (_, i) => i + 1).map((i) => (
               <Draggable
-                key={i + 1}
-                id={String(i + 1)}
+                key={i}
+                id={String(i)}
                 restrictVertical={restrictVertical}
                 restrictHorizontal={restrictHorizontal}
                 restrictWindow={restrictWindow}
