@@ -28,5 +28,6 @@ export default [
     route("drop-detector", "routes/drop/drop-detector.tsx"),
     route("sort-basic", "routes/sort/sort-basic.tsx"),
     route("sort-handle", "routes/sort/sort-handle.tsx"),
+    route("sort-modifier", "routes/sort/sort-modifier.tsx"),
   ]),
 ] satisfies RouteConfig

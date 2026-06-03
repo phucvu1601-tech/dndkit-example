@@ -1,7 +1,7 @@
 import {
-  DEFAULT_SORT_HANDLE,
-  type SortHandleState,
-} from "@/features/sort-handle/components/sort-handle-page"
+  DEFAULT_SORT_MODIFIER,
+  type SortModifierState,
+} from "@/features/sort-modifier/components/sort-modifier-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -18,19 +18,28 @@ import {
 import { Sortable } from "./sortable"
 
 interface PreviewProps {
-  state: SortHandleState
-  setField: <K extends keyof SortHandleState>(
+  state: SortModifierState
+  setField: <K extends keyof SortModifierState>(
     key: K,
-    value: SortHandleState[K],
+    value: SortModifierState[K],
   ) => void
   layout: GridLayout
 }
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
-  const { count, content, direction, isControlled, hasHandle } = state
+  const {
+    count,
+    content,
+    direction,
+    isControlled,
+    restrictVertical,
+    restrictHorizontal,
+    restrictWindow,
+    restrictParent,
+  } = state
   const draggableItems = generateSortableItemsCode({
     state,
-    defaultState: DEFAULT_SORT_HANDLE,
+    defaultState: DEFAULT_SORT_MODIFIER,
   })
   const code = generateSortableUsageCode({
     children: [draggableItems],
@@ -47,7 +56,10 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
               key={i}
               id={String(i)}
               index={index}
-              hasHandle={hasHandle}
+              restrictVertical={restrictVertical}
+              restrictHorizontal={restrictHorizontal}
+              restrictWindow={restrictWindow}
+              restrictParent={restrictParent}
             >
               {content}
             </Sortable>
@@ -79,9 +91,24 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             setValue={(value) => setField("isControlled", value)}
           />
           <CustomSwitch
-            label="Has handle"
-            value={hasHandle}
-            setValue={(value) => setField("hasHandle", value)}
+            label="Restrict horizontal"
+            value={restrictHorizontal}
+            setValue={(value) => setField("restrictHorizontal", value)}
+          />
+          <CustomSwitch
+            label="Restrict vertical"
+            value={restrictVertical}
+            setValue={(value) => setField("restrictVertical", value)}
+          />
+          <CustomSwitch
+            label="Restrict window"
+            value={restrictWindow}
+            setValue={(value) => setField("restrictWindow", value)}
+          />
+          <CustomSwitch
+            label="Restrict parent"
+            value={restrictParent}
+            setValue={(value) => setField("restrictParent", value)}
           />
         </div>
       </Section>

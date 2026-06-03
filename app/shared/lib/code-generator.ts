@@ -183,7 +183,7 @@ export function generateSortableItemsCode<
   const generate = isInline ? generateInlineJSX : generateJSX
   return `<div className="${direction}">
   {${isControlled ? "items" : `Array.from({ length: ${count} }, (_, i) => i + 1)`}.map((i, index) => (
-    ${generate("Sortable", { key: { var: "i" }, id: { var: "String(i)" }, index: { var: "index" }, ...props }, content)}
+${addIndent(generate("Sortable", { key: { var: "i" }, id: { var: "String(i)" }, index: { var: "index" }, ...props }, content), 2)}
   ))}
 </div>`
 }

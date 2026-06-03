@@ -10,6 +10,7 @@ import Count from "@/shared/components/custom/count"
 import { CustomCombobox } from "@/shared/components/custom/custom-combobox"
 import CustomInput from "@/shared/components/custom/custom-input"
 import CustomSwitch from "@/shared/components/custom/custom-switch"
+import { directionOptions } from "@/shared/constants/sort.constant"
 import {
   generateSortableItemsCode,
   generateSortableUsageCode,
@@ -24,13 +25,6 @@ interface PreviewProps {
   ) => void
   layout: GridLayout
 }
-
-const directionOptions = [
-  { value: "flex", label: "vertical" },
-  { value: "flex flex-col", label: "horizontal" },
-  { value: "grid grid-cols-4", label: "grid 4 column" },
-  { value: "grid grid-cols-10", label: "grid 10 column" },
-]
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
   const { count, content, direction, isControlled } = state
