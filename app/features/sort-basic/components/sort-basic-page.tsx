@@ -11,11 +11,15 @@ import Preview from "./preview"
 export interface SortBasicState {
   count: number
   content: string
+  direction: string
+  isControlled: boolean
 }
 
 export const DEFAULT_SORT_BASIC: SortBasicState = {
   count: 1,
   content: "",
+  direction: "flex",
+  isControlled: false,
 }
 
 export default function SortBasicPage() {

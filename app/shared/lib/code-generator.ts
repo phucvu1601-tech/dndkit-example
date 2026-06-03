@@ -152,11 +152,21 @@ ${addIndent(children.join("\n"), 2)}
 }
 
 export function generateSortableItemsCode<
-  T extends { count: number; content: string },
+  T extends {
+    count: number
+    content: string
+    direction: string
+    isControlled: boolean
+  },
 >({
   state,
   defaultState,
-  excludedKeys = new Set(["count", "content"]) as Set<keyof T>,
+  excludedKeys = new Set([
+    "count",
+    "content",
+    "direction",
+    "isControlled",
+  ]) as Set<keyof T>,
   isInline = false,
 }: {
   state: T
@@ -164,23 +174,43 @@ export function generateSortableItemsCode<
   excludedKeys?: Set<keyof T>
   isInline?: boolean
 }): string {
-  const { count, content } = state
+  const { count, content, direction, isControlled } = state
   const props = generateNonDefaultProps<T>({
     state,
     defaultState,
     excludedKeys,
   })
   const generate = isInline ? generateInlineJSX : generateJSX
-  return `{Array.from({ length: ${count} }, (_, i) => i + 1).map((i, index) => (
-  ${generate("Sortable", { key: { var: "i" }, id: { var: "String(i)" }, index: { var: "index" }, ...props }, content)}
-))}`
+  return `<div className="${direction}">
+  {${isControlled ? "items" : `Array.from({ length: ${count} }, (_, i) => i + 1)`}.map((i, index) => (
+    ${generate("Sortable", { key: { var: "i" }, id: { var: "String(i)" }, index: { var: "index" }, ...props }, content)}
+  ))}
+</div>`
 }
 
-export const generateSortableUsageCode = (children: string[]): string => {
-  return `import { DragDropProvider } from "@dnd-kit/react"
-import { Sortable } from "./sortable"
+export const generateSortableUsageCode = ({
+  children,
+  isControlled,
+  count,
+}: {
+  children: string[]
+  isControlled: boolean
+  count: number
+}): string => {
+  return `${isControlled ? `import { DragDropProvider } from "@dnd-kit/react"\n` : ""}import { Sortable } from "./sortable"
 
-<div className="grid grid-cols-10">
+${
+  isControlled
+    ? `const [items, setItems] = useState(Array.from({ length: ${count} }, (_, i) => i + 1))
+
+<DragDropProvider
+  onDragEnd={(event) => {
+    setItems((items) => move(items, event));
+  }}
+>
 ${addIndent(children.join("\n"))}
-</div>`
+</DragDropProvider>`
+    : children.join("\n")
+}
+`
 }

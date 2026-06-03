@@ -40,9 +40,10 @@ export function CustomCombobox({
       <Combobox
         items={options}
         value={value}
-        inputValue={value}
+        inputValue={options.find((o) => o.value === value)?.label ?? ""}
         onValueChange={(val) => setValue(val ?? "")}
         disabled={disabled}
+        filteredItems={options}
       >
         <ComboboxInput
           placeholder={placeholder}
