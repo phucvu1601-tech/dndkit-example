@@ -106,6 +106,10 @@ export const navData: NavGroup[] = [
             title: "Sort modifier",
             url: "/sort-modifier",
           },
+          {
+            title: "Sort plugin",
+            url: "/sort-plugin",
+          },
         ],
       },
     ],
