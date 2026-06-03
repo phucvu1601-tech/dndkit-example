@@ -1,7 +1,7 @@
 import {
-  DEFAULT_SORT_BASIC,
-  type SortBasicState,
-} from "@/features/sort-basic/components/sort-basic-page"
+  DEFAULT_SORT_HANDLE,
+  type SortHandleState,
+} from "@/features/sort-handle/components/sort-handle-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -17,10 +17,10 @@ import {
 import { Sortable } from "./sortable"
 
 interface PreviewProps {
-  state: SortBasicState
-  setField: <K extends keyof SortBasicState>(
+  state: SortHandleState
+  setField: <K extends keyof SortHandleState>(
     key: K,
-    value: SortBasicState[K],
+    value: SortHandleState[K],
   ) => void
   layout: GridLayout
 }
@@ -33,10 +33,10 @@ const directionOptions = [
 ]
 
 export default function Preview({ state, setField, layout }: PreviewProps) {
-  const { count, content, direction, isControlled } = state
+  const { count, content, direction, isControlled, hasHandle } = state
   const draggableItems = generateSortableItemsCode({
     state,
-    defaultState: DEFAULT_SORT_BASIC,
+    defaultState: DEFAULT_SORT_HANDLE,
     isInline: true,
   })
   const code = generateSortableUsageCode({
@@ -50,7 +50,12 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
       <Section label="Display">
         <DemoBackground className={direction}>
           {Array.from({ length: count }, (_, i) => i + 1).map((i, index) => (
-            <Sortable key={i} id={String(i)} index={index}>
+            <Sortable
+              key={i}
+              id={String(i)}
+              index={index}
+              hasHandle={hasHandle}
+            >
               {content}
             </Sortable>
           ))}
@@ -79,6 +84,11 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             label="Controlled sortable list"
             value={isControlled}
             setValue={(value) => setField("isControlled", value)}
+          />
+          <CustomSwitch
+            label="Has handle"
+            value={hasHandle}
+            setValue={(value) => setField("hasHandle", value)}
           />
         </div>
       </Section>
