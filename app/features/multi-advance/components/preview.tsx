@@ -1,7 +1,7 @@
 import { move } from "@dnd-kit/helpers"
 import { DragDropProvider } from "@dnd-kit/react"
 import { useEffect, useState } from "react"
-import { type MultiBasicState } from "@/features/multi-basic/components/multi-basic-page"
+import type { MultiAdvanceState } from "@/features/multi-advance/components/multi-advance-page"
 import { CodeBlock } from "@/shared/components/container/code-block"
 import DemoBackground from "@/shared/components/container/demo-background"
 import Grid, { type GridLayout } from "@/shared/components/container/grid"
@@ -11,14 +11,14 @@ import { CustomCombobox } from "@/shared/components/custom/custom-combobox"
 import { multiDirectionOptions } from "@/shared/constants/sort.constant"
 import { generateMultiUsageCode } from "@/shared/lib/code-generator"
 import { cn } from "@/shared/lib/utils"
-import { Droppable } from "./droppable"
 import { Sortable } from "./sortable"
+import { SortableContainer } from "./sortable-container"
 
 interface PreviewProps {
-  state: MultiBasicState
-  setField: <K extends keyof MultiBasicState>(
+  state: MultiAdvanceState
+  setField: <K extends keyof MultiAdvanceState>(
     key: K,
-    value: MultiBasicState[K],
+    value: MultiAdvanceState[K],
   ) => void
   layout: GridLayout
 }
@@ -71,12 +71,12 @@ export default function Preview({ state, setField, layout }: PreviewProps) {
             }}
           >
             <div className={cn(direction, "gap-4")}>
-              {Object.entries(items).map(([column, items]) => (
-                <Droppable key={column} id={column}>
+              {Object.entries(items).map(([column, items], index) => (
+                <SortableContainer key={column} id={column} index={index}>
                   {items.map((id, index) => (
                     <Sortable key={id} id={id} index={index} />
                   ))}
-                </Droppable>
+                </SortableContainer>
               ))}
             </div>
           </DragDropProvider>

@@ -8,25 +8,25 @@ import {
 import Code from "./code"
 import Preview from "./preview"
 
-export interface MultiBasicState {
+export interface MultiAdvanceState {
   count: number
   direction: string
 }
 
-export const DEFAULT_MULTI_BASIC: MultiBasicState = {
+export const DEFAULT_MULTI_ADVANCE: MultiAdvanceState = {
   count: 1,
   direction: "flex flex-wrap",
 }
 
-export default function MultiBasicPage() {
+export default function MultiAdvancePage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [state, setState] = useState<MultiBasicState>(() =>
-    initStateFromParams(searchParams, DEFAULT_MULTI_BASIC),
+  const [state, setState] = useState<MultiAdvanceState>(() =>
+    initStateFromParams(searchParams, DEFAULT_MULTI_ADVANCE),
   )
 
-  const setField = <K extends keyof MultiBasicState>(
+  const setField = <K extends keyof MultiAdvanceState>(
     key: K,
-    value: MultiBasicState[K],
+    value: MultiAdvanceState[K],
   ) => setState((prev) => ({ ...prev, [key]: value }))
 
   useEffect(() => {
@@ -34,19 +34,19 @@ export default function MultiBasicPage() {
     syncParamsWithState({
       state,
       params,
-      defaultState: DEFAULT_MULTI_BASIC,
+      defaultState: DEFAULT_MULTI_ADVANCE,
     })
     setSearchParams(params, { replace: true, preventScrollReset: true })
   }, [state, searchParams, setSearchParams])
 
   const handleReset = () => {
-    setState(DEFAULT_MULTI_BASIC)
+    setState(DEFAULT_MULTI_ADVANCE)
     setSearchParams({}, { replace: true, preventScrollReset: true })
   }
 
   return (
     <DemoPage
-      title="Multiple lists basic"
+      title="Multiple lists advance"
       hasChanges={searchParams.size !== 0}
       onReset={handleReset}
       renderPreview={(layout) => (

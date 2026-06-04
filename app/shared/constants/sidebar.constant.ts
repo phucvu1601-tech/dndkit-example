@@ -123,6 +123,10 @@ export const navData: NavGroup[] = [
             title: "Multi basic",
             url: "/multi-basic",
           },
+          {
+            title: "Multi advance",
+            url: "/multi-advance",
+          },
         ],
       },
     ],

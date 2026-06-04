@@ -1,13 +1,15 @@
-import { useDroppable } from "@dnd-kit/react"
+import { useSortable } from "@dnd-kit/react/sortable"
 
 interface DroppableProps {
   id: string
+  index: number
   children?: React.ReactNode
 }
 
-export function Droppable({ id, children }: DroppableProps) {
-  const { ref } = useDroppable({
+export function SortableContainer({ id, index, children }: DroppableProps) {
+  const { ref } = useSortable({
     id,
+    index,
   })
 
   return (
