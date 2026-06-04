@@ -31,5 +31,6 @@ export default [
     route("sort-modifier", "routes/sort/sort-modifier.tsx"),
     route("sort-plugin", "routes/sort/sort-plugin.tsx"),
     route("sort-transition", "routes/sort/sort-transition.tsx"),
+    route("multi-basic", "routes/multi/multi-basic.tsx"),
   ]),
 ] satisfies RouteConfig

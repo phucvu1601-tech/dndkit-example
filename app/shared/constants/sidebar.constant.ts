@@ -116,6 +116,15 @@ export const navData: NavGroup[] = [
           },
         ],
       },
+      {
+        title: "Multiple lists",
+        items: [
+          {
+            title: "Multi basic",
+            url: "/multi-basic",
+          },
+        ],
+      },
     ],
   },
 ]

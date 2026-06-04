@@ -214,3 +214,46 @@ ${addIndent(children.join("\n"))}
 }
 `
 }
+
+const generateAItems = (count: number): string =>
+  JSON.stringify(Array.from({ length: count }, (_, i) => `A${i + 1}`))
+
+export const generateMultiUsageCode = ({
+  count,
+  direction,
+}: {
+  count: number
+  direction: string
+}): string => {
+  return `
+import { useState } from 'react';
+import { DragDropProvider } from '@dnd-kit/react';
+import { move } from '@dnd-kit/helpers';
+
+import { Droppable } from './droppable';
+import { Sortable } from './sortable';
+
+const [items, setItems] = useState({
+  A: ${generateAItems(count)},
+  B: ["B1","B2"],
+  C: ["C1","C2","C3"],
+  D: [],
+})
+
+<DragDropProvider
+  onDragOver={(event) => {
+    setItems((items) => move(items, event))
+  }}
+>
+  <div className="${direction} gap-4">
+    {Object.entries(items).map(([column, items]) => (
+      <Droppable key={column} id={column}>
+        {items.map((id, index) => (
+          <Sortable key={id} id={id} index={index} />
+        ))}
+      </Droppable>
+    ))}
+  </div>
+</DragDropProvider>
+`
+}
